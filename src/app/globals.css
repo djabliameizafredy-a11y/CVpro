@@ -120,3 +120,139 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ============================================
+   CV Builder Pro — custom styles
+   ============================================ */
+
+/* Custom font families (loaded via next/font in layout.tsx) */
+.font-sans-inter {
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+}
+
+.font-sans-jakarta {
+  font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+}
+
+.font-serif-lora {
+  font-family: var(--font-lora), Georgia, serif;
+}
+
+.font-mono-fira {
+  font-family: var(--font-fira-code), monospace;
+}
+
+/* Print styling for PDF generation */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  /* Unfold the app shell so the full CV prints naturally */
+  .app-shell {
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .app-shell > main {
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  /* Always show the CV preview when printing, even if hidden on mobile edit view */
+  .cv-preview-scroll {
+    display: block !important;
+    overflow: visible !important;
+    background: white !important;
+    padding: 0 !important;
+  }
+
+  .cv-paper-container {
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: scale(1) !important;
+    border-radius: 0 !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+}
+
+/* Hide scrollbars for tab bars while keeping scrollability */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Fixed-size CV paper anchor for the responsive scale-to-fit wrapper */
+.cv-paper-fixed {
+  transform-origin: top left;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Slim custom scrollbars for long lists & panels */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: oklch(0.556 0 0 / 0.35);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.556 0 0 / 0.6);
+}
+
+/* Fade-in animation for tab panels */
+@keyframes cv-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: cv-fade-in 0.25s ease-out;
+}
+
+/* Subtle shimmer for AI loading states */
+@keyframes cv-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.ai-shimmer {
+  background: linear-gradient(90deg, transparent, oklch(0.7 0.15 200 / 0.25), transparent);
+  background-size: 200% 100%;
+  animation: cv-shimmer 1.5s infinite;
+}

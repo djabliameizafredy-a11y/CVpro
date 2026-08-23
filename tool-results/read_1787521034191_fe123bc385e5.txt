@@ -1,0 +1,1047 @@
+     1→import React, { useState } from 'react';
+     2→import { 
+     3→  User, 
+     4→  Code, 
+     5→  Briefcase, 
+     6→  GraduationCap, 
+     7→  Globe, 
+     8→  Layers, 
+     9→  Palette, 
+    10→  Upload, 
+    11→  Trash2, 
+    12→  Plus, 
+    13→  PhoneCall, 
+    14→  FileText,
+    15→  Image as ImageIcon
+    16→} from 'lucide-react';
+    17→import { CVData, SkillCategory, ProjectItem, EducationItem, LanguageItem, TemplateStyle, FontStyle, SpacingDensity } from '../types';
+    18→
+    19→interface EditorPanelProps {
+    20→  cv: CVData;
+    21→  onChange: (updated: CVData) => void;
+    22→  isDarkMode?: boolean;
+    23→}
+    24→
+    25→export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMode = true }) => {
+    26→  const [activeTab, setActiveTab] = useState<string>('personal');
+    27→
+    28→  const updatePersonal = (key: keyof typeof cv.personal, value: string) => {
+    29→    onChange({
+    30→      ...cv,
+    31→      personal: {
+    32→        ...cv.personal,
+    33→        [key]: value
+    34→      }
+    35→    });
+    36→  };
+    37→
+    38→  const updateTheme = (key: keyof typeof cv.theme, value: unknown) => {
+    39→    onChange({
+    40→      ...cv,
+    41→      theme: {
+    42→        ...cv.theme,
+    43→        [key]: value
+    44→      }
+    45→    });
+    46→  };
+    47→
+    48→  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    49→    const file = e.target.files?.[0];
+    50→    if (file) {
+    51→      const reader = new FileReader();
+    52→      reader.onload = (evt) => {
+    53→        updatePersonal('photoUrl', evt.target?.result as string);
+    54→      };
+    55→      reader.readAsDataURL(file);
+    56→    }
+    57→  };
+    58→
+    59→  // Helper additions
+    60→  const addSkillCategory = () => {
+    61→    const newCat: SkillCategory = {
+    62→      id: Date.now().toString(),
+    63→      category: cv.lang === 'fr' ? 'Nouvelle Catégorie' : 'New Category',
+    64→      tags: 'React, Node.js, TypeScript'
+    65→    };
+    66→    onChange({ ...cv, skills: [...cv.skills, newCat] });
+    67→  };
+    68→
+    69→  const updateSkill = (id: string, key: keyof SkillCategory, val: string) => {
+    70→    const updated = cv.skills.map(s => s.id === id ? { ...s, [key]: val } : s);
+    71→    onChange({ ...cv, skills: updated });
+    72→  };
+    73→
+    74→  const removeSkill = (id: string) => {
+    75→    onChange({ ...cv, skills: cv.skills.filter(s => s.id !== id) });
+    76→  };
+    77→
+    78→  const addProject = () => {
+    79→    const newProj: ProjectItem = {
+    80→      id: Date.now().toString(),
+    81→      title: cv.lang === 'fr' ? 'Nouveau Projet / Poste' : 'New Project / Role',
+    82→      companyOrClient: 'Entreprise / Client',
+    83→      startDate: '2024',
+    84→      desc: cv.lang === 'fr' ? 'Description des réalisations et résultats obtenus.' : 'Key achievements and results.',
+    85→      tag: 'Tech Stack'
+    86→    };
+    87→    onChange({ ...cv, projects: [...cv.projects, newProj] });
+    88→  };
+    89→
+    90→  const updateProject = (id: string, key: keyof ProjectItem, val: string) => {
+    91→    const updated = cv.projects.map(p => p.id === id ? { ...p, [key]: val } : p);
+    92→    onChange({ ...cv, projects: updated });
+    93→  };
+    94→
+    95→  const removeProject = (id: string) => {
+    96→    onChange({ ...cv, projects: cv.projects.filter(p => p.id !== id) });
+    97→  };
+    98→
+    99→  const addEducation = () => {
+   100→    const newEdu: EducationItem = {
+   101→      id: Date.now().toString(),
+   102→      degree: cv.lang === 'fr' ? 'Diplôme / Formation' : 'Degree / Certificate',
+   103→      school: 'Université / Établissement',
+   104→      period: '2020 - 2023',
+   105→      details: cv.lang === 'fr' ? 'Mention ou spécialité' : 'Honors or major'
+   106→    };
+   107→    onChange({ ...cv, education: [...cv.education, newEdu] });
+   108→  };
+   109→
+   110→  const updateEducation = (id: string, key: keyof EducationItem, val: string) => {
+   111→    const updated = cv.education.map(e => e.id === id ? { ...e, [key]: val } : e);
+   112→    onChange({ ...cv, education: updated });
+   113→  };
+   114→
+   115→  const removeEducation = (id: string) => {
+   116→    onChange({ ...cv, education: cv.education.filter(e => e.id !== id) });
+   117→  };
+   118→
+   119→  const addLanguage = () => {
+   120→    const newLang: LanguageItem = {
+   121→      id: Date.now().toString(),
+   122→      name: cv.lang === 'fr' ? 'Anglais' : 'French',
+   123→      level: cv.lang === 'fr' ? 'Courant / B2' : 'Fluent / C1'
+   124→    };
+   125→    onChange({ ...cv, languages: [...cv.languages, newLang] });
+   126→  };
+   127→
+   128→  const updateLanguage = (id: string, key: keyof LanguageItem, val: string) => {
+   129→    const updated = cv.languages.map(l => l.id === id ? { ...l, [key]: val } : l);
+   130→    onChange({ ...cv, languages: updated });
+   131→  };
+   132→
+   133→  const removeLanguage = (id: string) => {
+   134→    onChange({ ...cv, languages: cv.languages.filter(l => l.id !== id) });
+   135→  };
+   136→
+   137→  const addCustomSection = () => {
+   138→    const newSection = {
+   139→      id: Date.now().toString(),
+   140→      title: cv.lang === 'fr' ? 'Certifications & Projets' : 'Certifications & Awards',
+   141→      items: [
+   142→        {
+   143→          id: Date.now().toString() + '_item',
+   144→          title: 'Titre de la distinction / certification',
+   145→          subtitle: 'Organisme / Année',
+   146→          period: '2024'
+   147→        }
+   148→      ]
+   149→    };
+   150→    onChange({ ...cv, customSections: [...cv.customSections, newSection] });
+   151→  };
+   152→
+   153→  const tabs = [
+   154→    { id: 'personal', label: cv.lang === 'fr' ? 'Profil & Contact' : 'Profile & Contact', icon: User },
+   155→    { id: 'skills', label: cv.lang === 'fr' ? 'Compétences' : 'Skills', icon: Code },
+   156→    { id: 'projects', label: cv.lang === 'fr' ? 'Projets & Exp.' : 'Projects & Exp.', icon: Briefcase },
+   157→    { id: 'education', label: cv.lang === 'fr' ? 'Formation' : 'Education', icon: GraduationCap },
+   158→    { id: 'languages', label: cv.lang === 'fr' ? 'Langues' : 'Languages', icon: Globe },
+   159→    { id: 'custom', label: cv.lang === 'fr' ? 'Autres Sections' : 'Custom Sections', icon: Layers },
+   160→    { id: 'style', label: cv.lang === 'fr' ? 'Style & Thème' : 'Style & Theme', icon: Palette }
+   161→  ];
+   162→
+   163→  // Dynamic Theme Classes
+   164→  const cardClass = isDarkMode ? 'bg-slate-800/60 border-slate-700/80' : 'bg-white border-slate-200 shadow-2xs';
+   165→  const subCardClass = isDarkMode ? 'bg-slate-800/80 border-slate-700/80' : 'bg-slate-50 border-slate-200/90 shadow-2xs';
+   166→  const inputClass = isDarkMode
+   167→    ? 'bg-slate-900 border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500'
+   168→    : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 shadow-2xs';
+   169→  const labelClass = isDarkMode ? 'text-slate-300' : 'text-slate-700 font-semibold';
+   170→  const subLabelClass = isDarkMode ? 'text-slate-400' : 'text-slate-600 font-medium';
+   171→  const headingClass = isDarkMode ? 'text-sky-400 font-bold' : 'text-sky-600 font-bold';
+   172→
+   173→  return (
+   174→    <div className={`no-print border-r flex flex-col h-full overflow-hidden transition-colors duration-200 ${
+   175→      isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-slate-100 border-slate-200 text-slate-800'
+   176→    }`}>
+   177→      
+   178→      {/* Navigation Tabs Bar */}
+   179→      <div className={`flex items-center gap-1 p-2 border-b overflow-x-auto no-scrollbar transition-colors ${
+   180→        isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-200 shadow-2xs'
+   181→      }`}>
+   182→        {tabs.map((tab) => {
+   183→          const Icon = tab.icon;
+   184→          const isActive = activeTab === tab.id;
+   185→          return (
+   186→            <button
+   187→              key={tab.id}
+   188→              onClick={() => setActiveTab(tab.id)}
+   189→              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
+   190→                isActive
+   191→                  ? 'bg-blue-600 text-white shadow-md'
+   192→                  : isDarkMode 
+   193→                    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' 
+   194→                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+   195→              }`}
+   196→            >
+   197→              <Icon className="w-3.5 h-3.5" />
+   198→              <span>{tab.label}</span>
+   199→            </button>
+   200→          );
+   201→        })}
+   202→      </div>
+   203→
+   204→      {/* Form Content Area */}
+   205→      <div className="flex-1 p-5 overflow-y-auto space-y-6">
+   206→        
+   207→        {/* TAB 1: PERSONAL & CONTACT */}
+   208→        {activeTab === 'personal' && (
+   209→          <div className="space-y-5 animate-fade-in">
+   210→            {/* Identity */}
+   211→            <div className={`border rounded-xl p-4 space-y-3 ${cardClass}`}>
+   212→              <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   213→                <User className="w-4 h-4" />
+   214→                <span>{cv.lang === 'fr' ? 'Identité & Photo' : 'Identity & Photo'}</span>
+   215→              </h3>
+   216→
+   217→              <div className="grid grid-cols-2 gap-3">
+   218→                <div>
+   219→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   220→                    {cv.lang === 'fr' ? 'Prénom' : 'First Name'}
+   221→                  </label>
+   222→                  <input
+   223→                    type="text"
+   224→                    value={cv.personal.firstName}
+   225→                    onChange={(e) => updatePersonal('firstName', e.target.value)}
+   226→                    placeholder="ex: Jean"
+   227→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   228→                  />
+   229→                </div>
+   230→                <div>
+   231→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   232→                    {cv.lang === 'fr' ? 'Nom' : 'Last Name'}
+   233→                  </label>
+   234→                  <input
+   235→                    type="text"
+   236→                    value={cv.personal.lastName}
+   237→                    onChange={(e) => updatePersonal('lastName', e.target.value)}
+   238→                    placeholder="ex: DUPONT"
+   239→                    className={`w-full rounded-lg px-3 py-2 text-xs font-bold ${inputClass}`}
+   240→                  />
+   241→                </div>
+   242→              </div>
+   243→
+   244→              <div className="grid grid-cols-2 gap-3">
+   245→                <div>
+   246→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   247→                    {cv.lang === 'fr' ? 'Titre du poste' : 'Target Job Title'}
+   248→                  </label>
+   249→                  <input
+   250→                    type="text"
+   251→                    value={cv.personal.jobTitle}
+   252→                    onChange={(e) => updatePersonal('jobTitle', e.target.value)}
+   253→                    placeholder="ex: Développeur Full-Stack"
+   254→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   255→                  />
+   256→                </div>
+   257→                <div>
+   258→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   259→                    {cv.lang === 'fr' ? 'Sous-titre / Spécialité' : 'Subtitle / Tagline'}
+   260→                  </label>
+   261→                  <input
+   262→                    type="text"
+   263→                    value={cv.personal.subTitle}
+   264→                    onChange={(e) => updatePersonal('subTitle', e.target.value)}
+   265→                    placeholder="ex: Spécialiste React & Node.js"
+   266→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   267→                  />
+   268→                </div>
+   269→              </div>
+   270→
+   271→              <div className="grid grid-cols-2 gap-3">
+   272→                <div>
+   273→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   274→                    {cv.lang === 'fr' ? 'Nationalité' : 'Nationality'}
+   275→                  </label>
+   276→                  <input
+   277→                    type="text"
+   278→                    value={cv.personal.nationality}
+   279→                    onChange={(e) => updatePersonal('nationality', e.target.value)}
+   280→                    placeholder="ex: Togolaise / Française"
+   281→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   282→                  />
+   283→                </div>
+   284→                <div>
+   285→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   286→                    {cv.lang === 'fr' ? 'Permis de conduire' : 'Driver License'}
+   287→                  </label>
+   288→                  <input
+   289→                    type="text"
+   290→                    value={cv.personal.drivingLicense || ''}
+   291→                    onChange={(e) => updatePersonal('drivingLicense', e.target.value)}
+   292→                    placeholder="ex: Permis B"
+   293→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   294→                  />
+   295→                </div>
+   296→              </div>
+   297→
+   298→              {/* Photo Upload */}
+   299→              <div className={`pt-2 border-t flex items-center gap-4 ${isDarkMode ? 'border-slate-700/60' : 'border-slate-200'}`}>
+   300→                {cv.personal.photoUrl ? (
+   301→                  <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-blue-500 shrink-0">
+   302→                    <img src={cv.personal.photoUrl} alt="Photo" className="w-full h-full object-cover" />
+   303→                    <button
+   304→                      onClick={() => updatePersonal('photoUrl', '')}
+   305→                      className="absolute inset-0 bg-black/60 text-white opacity-0 hover:opacity-100 flex items-center justify-center transition text-xs"
+   306→                      title={cv.lang === 'fr' ? 'Supprimer la photo' : 'Remove photo'}
+   307→                    >
+   308→                      <Trash2 className="w-4 h-4" />
+   309→                    </button>
+   310→                  </div>
+   311→                ) : (
+   312→                  <div className={`w-14 h-14 rounded-full border-2 border-dashed flex items-center justify-center shrink-0 ${
+   313→                    isDarkMode ? 'bg-slate-900 border-slate-700 text-slate-500' : 'bg-slate-100 border-slate-300 text-slate-400'
+   314→                  }`}>
+   315→                    <ImageIcon className="w-5 h-5" />
+   316→                  </div>
+   317→                )}
+   318→                <div className="flex-1">
+   319→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   320→                    {cv.lang === 'fr' ? 'Photo de Profil' : 'Profile Photo'}
+   321→                  </label>
+   322→                  <label className={`cursor-pointer inline-flex items-center gap-2 border px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+   323→                    isDarkMode
+   324→                      ? 'bg-slate-900 hover:bg-slate-950 text-blue-400 border-slate-700'
+   325→                      : 'bg-slate-100 hover:bg-slate-200 text-blue-600 border-slate-300'
+   326→                  }`}>
+   327→                    <Upload className="w-3.5 h-3.5" />
+   328→                    <span>{cv.lang === 'fr' ? 'Téléverser photo' : 'Upload photo'}</span>
+   329→                    <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
+   330→                  </label>
+   331→                </div>
+   332→              </div>
+   333→            </div>
+   334→
+   335→            {/* Contacts */}
+   336→            <div className={`border rounded-xl p-4 space-y-3 ${cardClass}`}>
+   337→              <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   338→                <PhoneCall className="w-4 h-4" />
+   339→                <span>{cv.lang === 'fr' ? 'Coordonnées & Réseaux' : 'Contact & Networks'}</span>
+   340→              </h3>
+   341→
+   342→              <div>
+   343→                <label className={`block text-xs mb-1 ${labelClass}`}>
+   344→                  {cv.lang === 'fr' ? 'Adresse / Localisation' : 'Address / Location'}
+   345→                </label>
+   346→                <input
+   347→                  type="text"
+   348→                  value={cv.personal.address}
+   349→                  onChange={(e) => updatePersonal('address', e.target.value)}
+   350→                  placeholder="ex: Lomé, Togo"
+   351→                  className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   352→                />
+   353→              </div>
+   354→
+   355→              <div className="grid grid-cols-2 gap-3">
+   356→                <div>
+   357→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   358→                    {cv.lang === 'fr' ? 'Téléphone' : 'Phone'}
+   359→                  </label>
+   360→                  <input
+   361→                    type="text"
+   362→                    value={cv.personal.phone}
+   363→                    onChange={(e) => updatePersonal('phone', e.target.value)}
+   364→                    placeholder="ex: +228 90 00 00 00"
+   365→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   366→                  />
+   367→                </div>
+   368→                <div>
+   369→                  <label className={`block text-xs mb-1 ${labelClass}`}>Email</label>
+   370→                  <input
+   371→                    type="email"
+   372→                    value={cv.personal.email}
+   373→                    onChange={(e) => updatePersonal('email', e.target.value)}
+   374→                    placeholder="ex: contact@domaine.com"
+   375→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   376→                  />
+   377→                </div>
+   378→              </div>
+   379→
+   380→              <div className="grid grid-cols-2 gap-3">
+   381→                <div>
+   382→                  <label className={`block text-xs mb-1 ${labelClass}`}>GitHub</label>
+   383→                  <input
+   384→                    type="text"
+   385→                    value={cv.personal.github}
+   386→                    onChange={(e) => updatePersonal('github', e.target.value)}
+   387→                    placeholder="ex: github.com/votre-nom"
+   388→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   389→                  />
+   390→                </div>
+   391→                <div>
+   392→                  <label className={`block text-xs mb-1 ${labelClass}`}>LinkedIn</label>
+   393→                  <input
+   394→                    type="text"
+   395→                    value={cv.personal.linkedin || ''}
+   396→                    onChange={(e) => updatePersonal('linkedin', e.target.value)}
+   397→                    placeholder="ex: linkedin.com/in/votre-nom"
+   398→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   399→                  />
+   400→                </div>
+   401→              </div>
+   402→            </div>
+   403→
+   404→            {/* Profile / Summary */}
+   405→            <div className={`border rounded-xl p-4 space-y-3 ${cardClass}`}>
+   406→              <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   407→                <FileText className="w-4 h-4" />
+   408→                <span>{cv.lang === 'fr' ? 'Profil & Accroche Professionnelle' : 'Professional Summary'}</span>
+   409→              </h3>
+   410→              <textarea
+   411→                rows={4}
+   412→                value={cv.personal.summary}
+   413→                onChange={(e) => updatePersonal('summary', e.target.value)}
+   414→                placeholder={
+   415→                  cv.lang === 'fr'
+   416→                    ? 'Présentez brièvement votre parcours, vos compétences clés, votre passion et vos objectifs professionnels...'
+   417→                    : 'Briefly present your background, key skills, and target professional goals...'
+   418→                }
+   419→                className={`w-full rounded-lg px-3 py-2 text-xs leading-relaxed ${inputClass}`}
+   420→              />
+   421→              <div className="grid grid-cols-2 gap-3 pt-1">
+   422→                <div>
+   423→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   424→                    {cv.lang === 'fr' ? 'Atouts / Soft Skills' : 'Key Qualities'}
+   425→                  </label>
+   426→                  <input
+   427→                    type="text"
+   428→                    value={cv.personal.qualities}
+   429→                    onChange={(e) => updatePersonal('qualities', e.target.value)}
+   430→                    placeholder="ex: Rigueur, Esprit d'équipe, Agilité"
+   431→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   432→                  />
+   433→                </div>
+   434→                <div>
+   435→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   436→                    {cv.lang === 'fr' ? 'Disponibilité / Statut' : 'Availability'}
+   437→                  </label>
+   438→                  <input
+   439→                    type="text"
+   440→                    value={cv.personal.availability}
+   441→                    onChange={(e) => updatePersonal('availability', e.target.value)}
+   442→                    placeholder="ex: Disponible immédiatement"
+   443→                    className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
+   444→                  />
+   445→                </div>
+   446→              </div>
+   447→            </div>
+   448→          </div>
+   449→        )}
+   450→
+   451→        {/* TAB 2: SKILLS */}
+   452→        {activeTab === 'skills' && (
+   453→          <div className="space-y-4 animate-fade-in">
+   454→            <div className="flex justify-between items-center">
+   455→              <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   456→                <Code className="w-4 h-4" />
+   457→                <span>{cv.lang === 'fr' ? 'Catégories de Compétences' : 'Skill Categories'}</span>
+   458→              </h3>
+   459→              <button
+   460→                onClick={addSkillCategory}
+   461→                className="bg-blue-600/20 text-blue-500 hover:bg-blue-600/30 px-3 py-1.5 rounded-lg border border-blue-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+   462→              >
+   463→                <Plus className="w-3.5 h-3.5" />
+   464→                <span>{cv.lang === 'fr' ? 'Ajouter Catégorie' : 'Add Category'}</span>
+   465→              </button>
+   466→            </div>
+   467→
+   468→            {cv.skills.length === 0 ? (
+   469→              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+   470→                {cv.lang === 'fr' ? 'Aucune catégorie de compétence. Cliquez sur Ajouter.' : 'No skill categories yet. Click Add.'}
+   471→              </p>
+   472→            ) : (
+   473→              cv.skills.map((item, idx) => (
+   474→                <div key={item.id} className={`border rounded-xl p-3.5 relative space-y-2 ${subCardClass}`}>
+   475→                  <button
+   476→                    onClick={() => removeSkill(item.id)}
+   477→                    className="absolute top-3 right-3 text-slate-400 hover:text-rose-500 p-1 transition"
+   478→                  >
+   479→                    <Trash2 className="w-3.5 h-3.5" />
+   480→                  </button>
+   481→                  <div>
+   482→                    <label className={`block ${subLabelClass}`}>
+   483→                      {cv.lang === 'fr' ? `Catégorie ${idx + 1}` : `Category ${idx + 1}`}
+   484→                    </label>
+   485→                    <input
+   486→                      type="text"
+   487→                      value={item.category}
+   488→                      onChange={(e) => updateSkill(item.id, 'category', e.target.value)}
+   489→                      placeholder="ex: Développement Web Front-End"
+   490→                      className={`w-full rounded-lg px-2.5 py-1.5 text-xs font-semibold ${inputClass}`}
+   491→                    />
+   492→                  </div>
+   493→                  <div>
+   494→                    <label className={`block ${subLabelClass}`}>
+   495→                      {cv.lang === 'fr' ? 'Mots-clés (séparés par des virgules)' : 'Keywords (separated by commas)'}
+   496→                    </label>
+   497→                    <input
+   498→                      type="text"
+   499→                      value={item.tags}
+   500→                      onChange={(e) => updateSkill(item.id, 'tags', e.target.value)}
+   501→                      placeholder="ex: React, Next.js, TypeScript, Tailwind CSS"
+   502→                      className={`w-full rounded-lg px-2.5 py-1.5 text-xs font-medium ${inputClass}`}
+   503→                    />
+   504→                  </div>
+   505→                </div>
+   506→              ))
+   507→            )}
+   508→          </div>
+   509→        )}
+   510→
+   511→        {/* TAB 3: PROJECTS & EXPERIENCE */}
+   512→        {activeTab === 'projects' && (
+   513→          <div className="space-y-4 animate-fade-in">
+   514→            <div className="flex justify-between items-center">
+   515→              <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   516→                <Briefcase className="w-4 h-4" />
+   517→                <span>{cv.lang === 'fr' ? 'Projets & Expériences Pro' : 'Projects & Experiences'}</span>
+   518→              </h3>
+   519→              <button
+   520→                onClick={addProject}
+   521→                className="bg-blue-600/20 text-blue-500 hover:bg-blue-600/30 px-3 py-1.5 rounded-lg border border-blue-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+   522→              >
+   523→                <Plus className="w-3.5 h-3.5" />
+   524→                <span>{cv.lang === 'fr' ? 'Ajouter Projet' : 'Add Project'}</span>
+   525→              </button>
+   526→            </div>
+   527→
+   528→            {cv.projects.length === 0 ? (
+   529→              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+   530→                {cv.lang === 'fr' ? 'Aucune expérience ou projet.' : 'No experience or project items.'}
+   531→              </p>
+   532→            ) : (
+   533→              cv.projects.map((proj) => (
+   534→                <div key={proj.id} className={`border rounded-xl p-4 relative space-y-3 ${subCardClass}`}>
+   535→                  <button
+   536→                    onClick={() => removeProject(proj.id)}
+   537→                    className="absolute top-3 right-3 text-slate-400 hover:text-rose-500 p-1 transition"
+   538→                  >
+   539→                    <Trash2 className="w-4 h-4" />
+   540→                  </button>
+   541→
+   542→                  <div className="grid grid-cols-2 gap-3 pr-6">
+   543→                    <div>
+   544→                      <label className={`block ${subLabelClass}`}>
+   545→                        {cv.lang === 'fr' ? 'Titre du projet / Poste' : 'Project Title / Role'}
+   546→                      </label>
+   547→                      <input
+   548→                        type="text"
+   549→                        value={proj.title}
+   550→                        onChange={(e) => updateProject(proj.id, 'title', e.target.value)}
+   551→                        placeholder="ex: Marketplace Mobile"
+   552→                        className={`w-full rounded-lg px-2.5 py-1.5 text-xs font-bold ${inputClass}`}
+   553→                      />
+   554→                    </div>
+   555→                    <div>
+   556→                      <label className={`block ${subLabelClass}`}>
+   557→                        {cv.lang === 'fr' ? 'Entreprise / Client' : 'Company / Client'}
+   558→                      </label>
+   559→                      <input
+   560→                        type="text"
+   561→                        value={proj.companyOrClient || ''}
+   562→                        onChange={(e) => updateProject(proj.id, 'companyOrClient', e.target.value)}
+   563→                        placeholder="ex: TechPro Solutions"
+   564→                        className={`w-full rounded-lg px-2.5 py-1.5 text-xs ${inputClass}`}
+   565→                      />
+   566→                    </div>
+   567→                  </div>
+   568→
+   569→                  <div className="grid grid-cols-3 gap-2">
+   570→                    <div>
+   571→                      <label className={`block ${subLabelClass}`}>
+   572→                        {cv.lang === 'fr' ? 'Sous-titre' : 'Subtitle'}
+   573→                      </label>
+   574→                      <input
+   575→                        type="text"
+   576→                        value={proj.subtitle || ''}
+   577→                        onChange={(e) => updateProject(proj.id, 'subtitle', e.target.value)}
+   578→                        placeholder="ex: App e-commerce"
+   579→                        className={`w-full rounded-lg px-2.5 py-1.5 text-xs ${inputClass}`}
+   580→                      />
+   581→                    </div>
+   582→                    <div>
+   583→                      <label className={`block ${subLabelClass}`}>
+   584→                        {cv.lang === 'fr' ? 'Période' : 'Period'}
+   585→                      </label>
+   586→                      <input
+   587→                        type="text"
+   588→                        value={proj.startDate || ''}
+   589→                        onChange={(e) => updateProject(proj.id, 'startDate', e.target.value)}
+   590→                        placeholder="ex: 2024 - 2025"
+   591→                        className={`w-full rounded-lg px-2.5 py-1.5 text-xs ${inputClass}`}
+   592→                      />
+   593→                    </div>
+   594→                    <div>
+   595→                      <label className={`block ${subLabelClass}`}>
+   596→                        {cv.lang === 'fr' ? 'Badge / Tech' : 'Badge Tag'}
+   597→                      </label>
+   598→                      <input
+   599→                        type="text"
+   600→                        value={proj.tag || ''}
+   601→                        onChange={(e) => updateProject(proj.id, 'tag', e.target.value)}
+   602→                        placeholder="ex: Kotlin / React"
+   603→                        className={`w-full rounded-lg px-2.5 py-1.5 text-xs font-semibold ${inputClass}`}
+   604→                      />
+   605→                    </div>
+   606→                  </div>
+   607→
+   608→                  <div>
+   609→                    <label className={`block ${subLabelClass}`}>
+   610→                      {cv.lang === 'fr' ? 'Description & Résultats' : 'Description & Impact'}
+   611→                    </label>
+   612→                    <textarea
+   613→                      rows={2}
+   614→                      value={proj.desc}
+   615→                      onChange={(e) => updateProject(proj.id, 'desc', e.target.value)}
+   616→                      placeholder="Décrivez les défis relevés, les technologies utilisées et l'impact..."
+   617→                      className={`w-full rounded-lg px-2.5 py-1.5 text-xs ${inputClass}`}
+   618→                    />
+   619→                  </div>
+   620→                </div>
+   621→              ))
+   622→            )}
+   623→          </div>
+   624→        )}
+   625→
+   626→        {/* TAB 4: EDUCATION */}
+   627→        {activeTab === 'education' && (
+   628→          <div className="space-y-4 animate-fade-in">
+   629→            <div className="flex justify-between items-center">
+   630→              <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   631→                <GraduationCap className="w-4 h-4" />
+   632→                <span>{cv.lang === 'fr' ? 'Cursus Académique' : 'Education History'}</span>
+   633→              </h3>
+   634→              <button
+   635→                onClick={addEducation}
+   636→                className="bg-blue-600/20 text-blue-500 hover:bg-blue-600/30 px-3 py-1.5 rounded-lg border border-blue-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+   637→              >
+   638→                <Plus className="w-3.5 h-3.5" />
+   639→                <span>{cv.lang === 'fr' ? 'Ajouter Formation' : 'Add Education'}</span>
+   640→              </button>
+   641→            </div>
+   642→
+   643→            {cv.education.length === 0 ? (
+   644→              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+   645→                {cv.lang === 'fr' ? 'Aucune formation.' : 'No education records.'}
+   646→              </p>
+   647→            ) : (
+   648→              cv.education.map((edu) => (
+   649→                <div key={edu.id} className={`border rounded-xl p-4 relative space-y-3 ${subCardClass}`}>
+   650→                  <button
+   651→                    onClick={() => removeEducation(edu.id)}
+   652→                    className="absolute top-3 right-3 text-slate-400 hover:text-rose-500 p-1 transition"
+   653→                  >
+   654→                    <Trash2 className="w-4 h-4" />
+   655→                  </button>
+   656→
+   657→                  <div className="grid grid-cols-3 gap-2 pr-6">
+   658→                    <div className="col-span-2">
+   659→                      <label className={`block ${subLabelClass}`}>
+   660→                        {cv.lang === 'fr' ? 'Diplôme / Formation' : 'Degree / Program'}
+   661→                      </label>
+   662→                      <input
+   663→                        type="text"
+   664→                        value={edu.degree}
+   665→                        onChange={(e) => updateEducation(edu.id, 'degree', e.target.value)}
+   666→                        placeholder="ex: Master en Génie Logiciel"
+   667→                        className={`w-full rounded-lg px-2.5 py-1.5 text-xs font-bold ${inputClass}`}
+   668→                      />
+   669→                    </div>
+   670→                    <div>
+   671→                      <label className={`block ${subLabelClass}`}>
+   672→                        {cv.lang === 'fr' ? 'Période' : 'Period'}
+   673→                      </label>
+   674→                      <input
+   675→                        type="text"
+   676→                        value={edu.period}
+   677→                        onChange={(e) => updateEducation(edu.id, 'period', e.target.value)}
+   678→                        placeholder="ex: 2023 - 2025"
+   679→                        className={`w-full rounded-lg px-2.5 py-1.5 text-xs ${inputClass}`}
+   680→                      />
+   681→                    </div>
+   682→                  </div>
+   683→
+   684→                  <div>
+   685→                    <label className={`block ${subLabelClass}`}>
+   686→                      {cv.lang === 'fr' ? 'Établissement & Ville' : 'School & Location'}
+   687→                    </label>
+   688→                    <input
+   689→                      type="text"
+   690→                      value={edu.school}
+   691→                      onChange={(e) => updateEducation(edu.id, 'school', e.target.value)}
+   692→                      placeholder="ex: Université de Lomé, Togo"
+   693→                      className={`w-full rounded-lg px-2.5 py-1.5 text-xs ${inputClass}`}
+   694→                    />
+   695→                  </div>
+   696→
+   697→                  <div>
+   698→                    <label className={`block ${subLabelClass}`}>
+   699→                      {cv.lang === 'fr' ? 'Mention / Détails' : 'Honors / Details'}
+   700→                    </label>
+   701→                    <input
+   702→                      type="text"
+   703→                      value={edu.details || ''}
+   704→                      onChange={(e) => updateEducation(edu.id, 'details', e.target.value)}
+   705→                      placeholder="ex: Mention Très Bien, Spécialité Web"
+   706→                      className={`w-full rounded-lg px-2.5 py-1.5 text-xs ${inputClass}`}
+   707→                    />
+   708→                  </div>
+   709→                </div>
+   710→              ))
+   711→            )}
+   712→          </div>
+   713→        )}
+   714→
+   715→        {/* TAB 5: LANGUAGES */}
+   716→        {activeTab === 'languages' && (
+   717→          <div className="space-y-4 animate-fade-in">
+   718→            <div className="flex justify-between items-center">
+   719→              <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   720→                <Globe className="w-4 h-4" />
+   721→                <span>{cv.lang === 'fr' ? 'Langues Pratiquées' : 'Languages Spoken'}</span>
+   722→              </h3>
+   723→              <button
+   724→                onClick={addLanguage}
+   725→                className="bg-blue-600/20 text-blue-500 hover:bg-blue-600/30 px-3 py-1.5 rounded-lg border border-blue-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+   726→              >
+   727→                <Plus className="w-3.5 h-3.5" />
+   728→                <span>{cv.lang === 'fr' ? 'Ajouter Langue' : 'Add Language'}</span>
+   729→              </button>
+   730→            </div>
+   731→
+   732→            {cv.languages.length === 0 ? (
+   733→              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+   734→                {cv.lang === 'fr' ? 'Aucune langue ajoutée.' : 'No languages added.'}
+   735→              </p>
+   736→            ) : (
+   737→              cv.languages.map((langItem) => (
+   738→                <div key={langItem.id} className={`border rounded-xl p-3 flex items-center gap-2 relative ${subCardClass}`}>
+   739→                  <input
+   740→                    type="text"
+   741→                    value={langItem.name}
+   742→                    onChange={(e) => updateLanguage(langItem.id, 'name', e.target.value)}
+   743→                    placeholder="ex: Français"
+   744→                    className={`w-1/2 rounded-lg px-2.5 py-1.5 text-xs font-semibold ${inputClass}`}
+   745→                  />
+   746→                  <input
+   747→                    type="text"
+   748→                    value={langItem.level}
+   749→                    onChange={(e) => updateLanguage(langItem.id, 'level', e.target.value)}
+   750→                    placeholder="ex: Maternelle / Courant / B2"
+   751→                    className={`w-1/2 rounded-lg px-2.5 py-1.5 text-xs ${inputClass}`}
+   752→                  />
+   753→                  <button
+   754→                    onClick={() => removeLanguage(langItem.id)}
+   755→                    className="text-slate-400 hover:text-rose-500 p-1 transition shrink-0"
+   756→                  >
+   757→                    <Trash2 className="w-4 h-4" />
+   758→                  </button>
+   759→                </div>
+   760→              ))
+   761→            )}
+   762→          </div>
+   763→        )}
+   764→
+   765→        {/* TAB 6: CUSTOM SECTIONS */}
+   766→        {activeTab === 'custom' && (
+   767→          <div className="space-y-4 animate-fade-in">
+   768→            <div className="flex justify-between items-center">
+   769→              <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   770→                <Layers className="w-4 h-4" />
+   771→                <span>{cv.lang === 'fr' ? 'Sections Personnalisées' : 'Custom Sections'}</span>
+   772→              </h3>
+   773→              <button
+   774→                onClick={addCustomSection}
+   775→                className="bg-blue-600/20 text-blue-500 hover:bg-blue-600/30 px-3 py-1.5 rounded-lg border border-blue-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+   776→              >
+   777→                <Plus className="w-3.5 h-3.5" />
+   778→                <span>{cv.lang === 'fr' ? 'Nouvelle Section' : 'New Section'}</span>
+   779→              </button>
+   780→            </div>
+   781→
+   782→            {cv.customSections.length === 0 ? (
+   783→              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+   784→                {cv.lang === 'fr' ? 'Ajoutez des certifications, projets personnels ou bénévolat.' : 'Add certifications, side projects, or volunteer work.'}
+   785→              </p>
+   786→            ) : (
+   787→              cv.customSections.map((sec) => (
+   788→                <div key={sec.id} className={`border rounded-xl p-4 space-y-3 relative ${subCardClass}`}>
+   789→                  <button
+   790→                    onClick={() => {
+   791→                      const updated = cv.customSections.filter(s => s.id !== sec.id);
+   792→                      onChange({ ...cv, customSections: updated });
+   793→                    }}
+   794→                    className="absolute top-3 right-3 text-slate-400 hover:text-rose-500 p-1"
+   795→                  >
+   796→                    <Trash2 className="w-4 h-4" />
+   797→                  </button>
+   798→
+   799→                  <div>
+   800→                    <label className={`block ${subLabelClass}`}>
+   801→                      {cv.lang === 'fr' ? 'Titre de la section' : 'Section Title'}
+   802→                    </label>
+   803→                    <input
+   804→                      type="text"
+   805→                      value={sec.title}
+   806→                      onChange={(e) => {
+   807→                        const updated = cv.customSections.map(s => s.id === sec.id ? { ...s, title: e.target.value } : s);
+   808→                        onChange({ ...cv, customSections: updated });
+   809→                      }}
+   810→                      placeholder="ex: Certifications & Prix"
+   811→                      className={`w-full rounded-lg px-2.5 py-1.5 text-xs font-bold ${inputClass}`}
+   812→                    />
+   813→                  </div>
+   814→
+   815→                  <div className="space-y-2">
+   816→                    {sec.items.map((item) => (
+   817→                      <div key={item.id} className={`p-2.5 rounded-lg border grid grid-cols-2 gap-2 ${
+   818→                        isDarkMode ? 'bg-slate-900 border-slate-700/60' : 'bg-white border-slate-200'
+   819→                      }`}>
+   820→                        <input
+   821→                          type="text"
+   822→                          value={item.title}
+   823→                          onChange={(e) => {
+   824→                            const newItems = sec.items.map(it => it.id === item.id ? { ...it, title: e.target.value } : it);
+   825→                            const newSecs = cv.customSections.map(s => s.id === sec.id ? { ...s, items: newItems } : s);
+   826→                            onChange({ ...cv, customSections: newSecs });
+   827→                          }}
+   828→                          placeholder="Titre"
+   829→                          className={`rounded px-2 py-1 text-xs font-semibold ${inputClass}`}
+   830→                        />
+   831→                        <input
+   832→                          type="text"
+   833→                          value={item.subtitle || ''}
+   834→                          onChange={(e) => {
+   835→                            const newItems = sec.items.map(it => it.id === item.id ? { ...it, subtitle: e.target.value } : it);
+   836→                            const newSecs = cv.customSections.map(s => s.id === sec.id ? { ...s, items: newItems } : s);
+   837→                            onChange({ ...cv, customSections: newSecs });
+   838→                          }}
+   839→                          placeholder="Organisme / Année"
+   840→                          className={`rounded px-2 py-1 text-xs ${inputClass}`}
+   841→                        />
+   842→                      </div>
+   843→                    ))}
+   844→                    <button
+   845→                      onClick={() => {
+   846→                        const newItem = { id: Date.now().toString(), title: 'Élément', subtitle: '' };
+   847→                        const newSecs = cv.customSections.map(s => s.id === sec.id ? { ...s, items: [...s.items, newItem] } : s);
+   848→                        onChange({ ...cv, customSections: newSecs });
+   849→                      }}
+   850→                      className="text-[11px] text-sky-500 hover:underline flex items-center gap-1 font-semibold pt-1"
+   851→                    >
+   852→                      <Plus className="w-3 h-3" /> {cv.lang === 'fr' ? 'Ajouter une ligne' : 'Add item'}
+   853→                    </button>
+   854→                  </div>
+   855→                </div>
+   856→              ))
+   857→            )}
+   858→          </div>
+   859→        )}
+   860→
+   861→        {/* TAB 7: STYLE & THEME */}
+   862→        {activeTab === 'style' && (
+   863→          <div className="space-y-5 animate-fade-in">
+   864→            {/* Template Chooser */}
+   865→            <div className={`border rounded-xl p-4 space-y-3 ${cardClass}`}>
+   866→              <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   867→                <Palette className="w-4 h-4" />
+   868→                <span>{cv.lang === 'fr' ? 'Modèle de Design' : 'Layout Template'}</span>
+   869→              </h3>
+   870→
+   871→              <div className="grid grid-cols-2 gap-2.5">
+   872→                {[
+   873→                  { id: 'modern', label: cv.lang === 'fr' ? 'Moderne (Sidebar)' : 'Modern (Sidebar)' },
+   874→                  { id: 'minimalist', label: cv.lang === 'fr' ? 'Minimaliste' : 'Minimalist' },
+   875→                  { id: 'executive', label: cv.lang === 'fr' ? 'Exécutif Banner' : 'Executive Banner' },
+   876→                  { id: 'creative', label: cv.lang === 'fr' ? 'Créatif Clean' : 'Creative Clean' },
+   877→                ].map((tmpl) => (
+   878→                  <button
+   879→                    key={tmpl.id}
+   880→                    onClick={() => updateTheme('template', tmpl.id as TemplateStyle)}
+   881→                    className={`p-3 rounded-xl border text-xs font-bold transition flex flex-col items-center justify-center gap-1 text-center ${
+   882→                      cv.theme.template === tmpl.id
+   883→                        ? 'bg-blue-600 border-blue-400 text-white shadow-lg'
+   884→                        : isDarkMode
+   885→                          ? 'bg-slate-900 border-slate-700 text-slate-300 hover:border-slate-500'
+   886→                          : 'bg-slate-50 border-slate-300 text-slate-700 hover:border-slate-400'
+   887→                    }`}
+   888→                  >
+   889→                    <span>{tmpl.label}</span>
+   890→                  </button>
+   891→                ))}
+   892→              </div>
+   893→            </div>
+   894→
+   895→            {/* Colors / Background & Accent Theme */}
+   896→            <div className={`border rounded-xl p-4 space-y-3 ${cardClass}`}>
+   897→              <div>
+   898→                <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   899→                  {cv.lang === 'fr' ? 'Thème & Couleurs du CV' : 'CV Colors & Theme'}
+   900→                </h3>
+   901→                <p className={`text-[11px] mt-0.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+   902→                  {cv.lang === 'fr'
+   903→                    ? 'Choisissez une palette prédéfinie ou personnalisez le fond de la sidebar / en-tête et la couleur des icônes/titres.'
+   904→                    : 'Select a preset palette or customize background and accent colors.'}
+   905→                </p>
+   906→              </div>
+   907→
+   908→              {/* Presets */}
+   909→              <div className="space-y-1.5">
+   910→                <span className={`text-[10px] uppercase tracking-wider font-bold block ${
+   911→                  isDarkMode ? 'text-slate-400' : 'text-slate-500'
+   912→                }`}>
+   913→                  {cv.lang === 'fr' ? 'Palettes Prédéfinies' : 'Preset Palettes'}
+   914→                </span>
+   915→                <div className="flex items-center gap-2.5 flex-wrap">
+   916→                  {[
+   917→                    { name: 'Bleu Slate', bg: '#0f172a', accent: '#0284c7' },
+   918→                    { name: 'Rouge Crimson', bg: '#881337', accent: '#be123c' },
+   919→                    { name: 'Bleu Roi', bg: '#1e3a8a', accent: '#2563eb' },
+   920→                    { name: 'Vert Émeraude', bg: '#064e3b', accent: '#059669' },
+   921→                    { name: 'Violet / Indigo', bg: '#312e81', accent: '#4f46e5' },
+   922→                    { name: 'Teal / Cyan', bg: '#134e4a', accent: '#0d9488' },
+   923→                    { name: 'Bordeaux Profond', bg: '#4c0519', accent: '#e11d48' },
+   924→                    { name: 'Noir Anthracite', bg: '#18181b', accent: '#38bdf8' }
+   925→                  ].map((c) => {
+   926→                    const isActive = (cv.theme.primaryColor || '#0f172a').toLowerCase() === c.bg.toLowerCase();
+   927→                    return (
+   928→                      <button
+   929→                        key={c.name}
+   930→                        onClick={() => {
+   931→                          updateTheme('primaryColor', c.bg);
+   932→                          updateTheme('accentColor', c.accent);
+   933→                        }}
+   934→                        className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 relative overflow-hidden ${
+   935→                          isActive ? 'border-white ring-2 ring-sky-400 scale-110 shadow-lg' : 'border-slate-400'
+   936→                        }`}
+   937→                        style={{ backgroundColor: c.bg }}
+   938→                        title={c.name}
+   939→                      >
+   940→                        <span
+   941→                          className="absolute right-0 bottom-0 w-3.5 h-3.5 rounded-tl-full"
+   942→                          style={{ backgroundColor: c.accent }}
+   943→                        />
+   944→                      </button>
+   945→                    );
+   946→                  })}
+   947→                </div>
+   948→              </div>
+   949→
+   950→              {/* Custom Color Pickers */}
+   951→              <div className={`grid grid-cols-2 gap-2.5 pt-2 border-t ${isDarkMode ? 'border-slate-700/60' : 'border-slate-200'}`}>
+   952→                <label className={`flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border text-[11px] transition ${
+   953→                  isDarkMode
+   954→                    ? 'bg-slate-900 border-slate-700 hover:border-slate-500 text-slate-300'
+   955→                    : 'bg-slate-50 border-slate-300 hover:border-slate-400 text-slate-800'
+   956→                }`}>
+   957→                  <input
+   958→                    type="color"
+   959→                    value={cv.theme.primaryColor || '#0f172a'}
+   960→                    onChange={(e) => updateTheme('primaryColor', e.target.value)}
+   961→                    className="w-6 h-6 rounded border-0 cursor-pointer bg-transparent shrink-0"
+   962→                  />
+   963→                  <div className="truncate">
+   964→                    <div className="font-semibold">{cv.lang === 'fr' ? 'Couleur de fond' : 'Background'}</div>
+   965→                    <div className={`text-[9px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{cv.lang === 'fr' ? 'Sidebar / En-tête' : 'Sidebar / Header'}</div>
+   966→                  </div>
+   967→                </label>
+   968→
+   969→                <label className={`flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border text-[11px] transition ${
+   970→                  isDarkMode
+   971→                    ? 'bg-slate-900 border-slate-700 hover:border-slate-500 text-slate-300'
+   972→                    : 'bg-slate-50 border-slate-300 hover:border-slate-400 text-slate-800'
+   973→                }`}>
+   974→                  <input
+   975→                    type="color"
+   976→                    value={cv.theme.accentColor || '#0284c7'}
+   977→                    onChange={(e) => updateTheme('accentColor', e.target.value)}
+   978→                    className="w-6 h-6 rounded border-0 cursor-pointer bg-transparent shrink-0"
+   979→                  />
+   980→                  <div className="truncate">
+   981→                    <div className="font-semibold">{cv.lang === 'fr' ? 'Couleur d\'accent' : 'Accent Color'}</div>
+   982→                    <div className={`text-[9px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{cv.lang === 'fr' ? 'Icônes & Bordures' : 'Icons & Titles'}</div>
+   983→                  </div>
+   984→                </label>
+   985→              </div>
+   986→            </div>
+   987→
+   988→            {/* Fonts & Spacing */}
+   989→            <div className={`border rounded-xl p-4 space-y-3 ${cardClass}`}>
+   990→              <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>
+   991→                {cv.lang === 'fr' ? 'Typographie & Densité' : 'Typography & Spacing'}
+   992→              </h3>
+   993→
+   994→              <div className="grid grid-cols-2 gap-3">
+   995→                <div>
+   996→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+   997→                    {cv.lang === 'fr' ? 'Police de caractères' : 'Font Family'}
+   998→                  </label>
+   999→                  <select
+  1000→                    value={cv.theme.fontFamily}
+  1001→                    onChange={(e) => updateTheme('fontFamily', e.target.value as FontStyle)}
+  1002→                    className={`w-full rounded-lg px-2.5 py-2 text-xs ${inputClass}`}
+  1003→                  >
+  1004→                    <option value="sans">Inter / Modern Sans</option>
+  1005→                    <option value="serif">Lora / Serif Élégant</option>
+  1006→                    <option value="mono">Fira Code / Tech Mono</option>
+  1007→                  </select>
+  1008→                </div>
+  1009→
+  1010→                <div>
+  1011→                  <label className={`block text-xs mb-1 ${labelClass}`}>
+  1012→                    {cv.lang === 'fr' ? 'Espacement / Densité' : 'Spacing Density'}
+  1013→                  </label>
+  1014→                  <select
+  1015→                    value={cv.theme.density}
+  1016→                    onChange={(e) => updateTheme('density', e.target.value as SpacingDensity)}
+  1017→                    className={`w-full rounded-lg px-2.5 py-2 text-xs ${inputClass}`}
+  1018→                  >
+  1019→                    <option value="compact">Compact (Fit 1 page)</option>
+  1020→                    <option value="normal">Normal (Équilibré)</option>
+  1021→                    <option value="spacious">Aéré (Spacious)</option>
+  1022→                  </select>
+  1023→                </div>
+  1024→              </div>
+  1025→
+  1026→              <div className="flex items-center gap-3 pt-2">
+  1027→                <input
+  1028→                  type="checkbox"
+  1029→                  id="toggle-photo"
+  1030→                  checked={cv.theme.showPhoto}
+  1031→                  onChange={(e) => updateTheme('showPhoto', e.target.checked)}
+  1032→                  className="rounded border-slate-400 text-blue-600 focus:ring-0 cursor-pointer"
+  1033→                />
+  1034→                <label htmlFor="toggle-photo" className={`text-xs font-medium cursor-pointer ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>
+  1035→                  {cv.lang === 'fr' ? 'Afficher l\'emplacement photo' : 'Display profile photo'}
+  1036→                </label>
+  1037→              </div>
+  1038→            </div>
+  1039→
+  1040→          </div>
+  1041→        )}
+  1042→
+  1043→      </div>
+  1044→    </div>
+  1045→  );
+  1046→};
+  1047→
