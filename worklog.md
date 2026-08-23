@@ -40,3 +40,20 @@ Stage Summary:
 - CV Builder Pro fully migrated to Next.js 16 with 5 new features: (1) AI Copilot chat with CV context, (2) AI ATS job-offer matching, (3) AI cover letter generator, (4) cloud save/load multiple CVs (Prisma/SQLite), (5) Executive + Creative templates
 - All original features preserved: 7-tab editor, PDF/PNG/print export, JSON import/export, FR/EN, dark/light, localStorage autosave, 10 palettes, 4 fonts, photo upload
 - All AI endpoints verified working with real responses (z-ai-web-dev-sdk, thinking disabled, role 'assistant' system prompts)
+
+---
+Task ID: 3
+Agent: main
+Task: Fix preview cross-origin problem (user report: "règle le problème")
+
+Work Log:
+- Inspected dev.log: found warning "Cross origin request detected from preview-chat-5256a19a-5211-4205-b131-59c44ed5d60e.space-z.ai to /_next/* resource" (Next.js 16 blocks/rejects HMR + asset requests from non-allowed dev origins, breaking the preview panel experience)
+- Added `allowedDevOrigins: ["*.space-z.ai", "*.chat.z.ai", "localhost"]` to next.config.ts
+- Restarted dev server (double-fork daemonization) for config to take effect
+- Verified: fresh dev.log has 0 cross-origin warnings; CSS chunk served 200 (220KB) with preview Origin header; page loads with zero page errors and clean console; Copilote IA and ATS modals open/close correctly
+- Ran final lint pass — clean
+
+Stage Summary:
+- Root cause: Next.js 16 allowedDevOrigins not configured for the sandbox preview proxy domain
+- Fix: wildcard *.space-z.ai (and *.chat.z.ai) added to allowedDevOrigins in next.config.ts
+- Preview panel now loads /_next/* assets (CSS/JS/HMR) without cross-origin rejection

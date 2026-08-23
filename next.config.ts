@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
+  // Allow the sandbox preview proxy origin to serve /_next/* assets (HMR, chunks)
+  allowedDevOrigins: ["*.space-z.ai", "*.chat.z.ai", "localhost"],
 };
 
 export default nextConfig;
