@@ -18,7 +18,8 @@ import {
   Mail,
   CloudDownload,
   CloudUpload,
-  Save
+  Save,
+  Home
 } from 'lucide-react';
 import { CVData } from '@/lib/cv/types';
 
@@ -43,6 +44,7 @@ interface HeaderProps {
   atsScore: number;
   isExportingPdf?: boolean;
   isExportingImage?: boolean;
+  onBackHome?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -65,7 +67,8 @@ export const Header: React.FC<HeaderProps> = ({
   isSavingCloud = false,
   atsScore,
   isExportingPdf = false,
-  isExportingImage = false
+  isExportingImage = false,
+  onBackHome
 }) => {
   const [isExportMenuOpen, setIsExportMenuOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -110,6 +113,16 @@ export const Header: React.FC<HeaderProps> = ({
     >
       {/* Brand Title */}
       <div className="flex items-center gap-3">
+        {onBackHome && (
+          <button
+            onClick={onBackHome}
+            className={`${btnBgClass} text-xs font-semibold px-2 py-1.5 rounded-lg border transition flex items-center gap-1 shrink-0`}
+            title={isFr ? "Retour à l'accueil" : 'Back to home'}
+            aria-label={isFr ? "Retour à l'accueil" : 'Back to home'}
+          >
+            <Home className="w-3.5 h-3.5" aria-hidden />
+          </button>
+        )}
         <div className="bg-gradient-to-tr from-sky-600 to-emerald-500 text-white p-2.5 rounded-xl shadow-lg shadow-sky-500/20 flex items-center justify-center">
           <FileText className="w-5 h-5" aria-hidden />
         </div>

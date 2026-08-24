@@ -57,3 +57,31 @@ Stage Summary:
 - Root cause: Next.js 16 allowedDevOrigins not configured for the sandbox preview proxy domain
 - Fix: wildcard *.space-z.ai (and *.chat.z.ai) added to allowedDevOrigins in next.config.ts
 - Preview panel now loads /_next/* assets (CSS/JS/HMR) without cross-origin rejection
+
+---
+Task ID: 4
+Agent: main
+Task: Add onboarding landing page with "Commencer" button → app
+
+Work Log:
+- Extracted existing app from page.tsx into new `src/components/cv/CvBuilderApp.tsx` (accepts onBackHome prop)
+- Added `onBackHome` optional prop to Header.tsx → renders a Home icon button (btnBgClass themed) next to the brand logo to return to landing
+- Created `src/components/cv/Landing.tsx`: rich marketing landing with framer-motion animations
+  - Sticky top nav (logo + theme toggle + "Ouvrir l'app" button)
+  - Hero: badge "Propulsé par l'IA", gradient headline "Créez un CV professionnel en quelques minutes", feature pills, mockup preview (fake window chrome + editor + CV paper), floating AI badge
+  - Features grid (6 cards: Copilote IA, ATS, Lettre, Cloud, Templates, Export) with gradient icons + whileInView animations
+  - How-to-use (4 numbered steps with connecting line on desktop)
+  - Why section with ATS score visual mockup (100% Excellent + checklist)
+  - Final CTA section with big "Commencer" button (gradient, hover scale, Wand2 + ArrowRight icons)
+  - Footer
+  - Decorative animated gradient blobs (sky/emerald/rose)
+- Refactored `src/app/page.tsx` to route between Landing and CvBuilderApp via `useSyncExternalStore` reading `cv_builder_started_v1` localStorage key (React-recommended pattern, no setState-in-effect lint error, no hydration mismatch)
+- Fixed lint: removed unused Eye/AnimatePresence imports, fixed apostrophe in title attr (double quotes), removed duplicate toggleTheme
+- Verified via agent-browser: landing loads first → scroll to "Commencer" → click → app loads with "Retour à l'accueil" button in header → click back → landing returns; reload persists started state (localStorage); light mode toggle works on landing; ATS modal still opens in app; zero errors
+- VLM validated: desktop landing (professional, clear hierarchy, CTA visible), mobile landing 390px (no overflow, proper stacking, mobile-first)
+
+Stage Summary:
+- Single-route SPA approach: page.tsx switches view based on localStorage flag (no new route, complies with "/" only rule)
+- Landing explains all features + how-to-use steps, big "Commencer" CTA at bottom
+- App remains fully functional; "Retour à l'accueil" Home button added to header for navigation back
+- Theme toggle on landing uses useSyncExternalStore (shares localStorage key with app's theme)
