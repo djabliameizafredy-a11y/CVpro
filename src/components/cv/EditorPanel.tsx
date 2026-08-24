@@ -60,9 +60,9 @@ const AiButton: React.FC<AiButtonProps> = ({ target, label, className, isFr, isL
     disabled={isLoading}
     className={
       className ??
-      'bg-gradient-to-r from-sky-600/20 to-emerald-600/20 text-sky-500 hover:from-sky-600/30 hover:to-emerald-600/30 px-2.5 py-1 rounded-lg border border-sky-500/30 text-[10px] font-bold transition flex items-center gap-1 disabled:opacity-60 shrink-0'
+      'bg-emerald-600/15 text-emerald-600 hover:bg-emerald-600/25 px-2.5 py-1 rounded-lg border border-emerald-500/30 text-[10px] font-semibold transition flex items-center gap-1 disabled:opacity-60 shrink-0'
     }
-    title={isFr ? "Générer / améliorer avec l'IA" : 'Generate / improve with AI'}
+    title={isFr ? 'Générer / améliorer le texte' : 'Generate / improve text'}
   >
     {isLoading ? <Loader2 className="w-3 h-3 animate-spin" aria-hidden /> : <Sparkles className="w-3 h-3" aria-hidden />}
     <span>{label}</span>
@@ -510,7 +510,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                   }
                   className={`w-full rounded-lg px-3 py-2 text-xs leading-relaxed ${inputClass}`}
                 />
-                {renderAiButton({ kind: 'summary' }, isFr ? 'IA' : 'AI')}
+                {renderAiButton({ kind: 'summary' }, isFr ? 'Suggérer' : 'Suggest')}
               </div>
               <div className="grid grid-cols-2 gap-3 pt-1">
                 <div>
@@ -526,7 +526,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                       placeholder="ex: Rigueur, Esprit d'équipe, Agilité"
                       className={`w-full rounded-lg px-3 py-2 text-xs ${inputClass}`}
                     />
-                    {renderAiButton({ kind: 'qualities' }, isFr ? 'IA' : 'AI')}
+                    {renderAiButton({ kind: 'qualities' }, isFr ? 'Suggérer' : 'Suggest')}
                   </div>
                 </div>
                 <div>
@@ -558,8 +558,8 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
               <div className="flex items-center gap-2">
                 {renderAiButton(
                   { kind: 'skills' },
-                  isFr ? 'Suggestions IA' : 'AI Suggestions',
-                  'bg-gradient-to-r from-sky-600/20 to-emerald-600/20 text-sky-500 hover:from-sky-600/30 hover:to-emerald-600/30 px-3 py-1.5 rounded-lg border border-sky-500/30 text-xs font-semibold transition flex items-center gap-1.5 disabled:opacity-60'
+                  isFr ? 'Suggestions' : 'Suggestions',
+                  'bg-emerald-600/15 text-emerald-600 hover:bg-emerald-600/25 px-3 py-1.5 rounded-lg border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5 disabled:opacity-60'
                 )}
                 <button
                   onClick={addSkillCategory}
@@ -711,7 +711,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <label className={`block ${subLabelClass}`}>{isFr ? 'Description & Résultats' : 'Description & Impact'}</label>
-                      {renderAiButton({ kind: 'project', projectId: proj.id }, isFr ? 'Améliorer avec IA' : 'Improve with AI')}
+                      {renderAiButton({ kind: 'project', projectId: proj.id }, isFr ? 'Améliorer' : 'Improve')}
                     </div>
                     <textarea
                       rows={2}
@@ -728,7 +728,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                       <label className={`block ${subLabelClass}`}>
                         {isFr ? 'Puces de réussites (optionnel)' : 'Achievement bullets (optional)'}
                       </label>
-                      {renderAiButton({ kind: 'bullets', projectId: proj.id }, isFr ? 'Générer puces' : 'Generate bullets')}
+                      {renderAiButton({ kind: 'bullets', projectId: proj.id }, isFr ? 'Générer les puces' : 'Generate bullets')}
                     </div>
                     {(proj.bullets || []).map((bullet, bIdx) => (
                       <div key={bIdx} className="flex items-center gap-1.5 mb-1.5">

@@ -14,7 +14,7 @@ import {
   Loader2,
   Sun,
   Moon,
-  Bot,
+  MessagesSquare,
   Mail,
   CloudDownload,
   CloudUpload,
@@ -123,23 +123,20 @@ export const Header: React.FC<HeaderProps> = ({
             <Home className="w-3.5 h-3.5" aria-hidden />
           </button>
         )}
-        <div className="bg-gradient-to-tr from-sky-600 to-emerald-500 text-white p-2.5 rounded-xl shadow-lg shadow-sky-500/20 flex items-center justify-center">
+        <div className="bg-emerald-600 text-white p-2.5 rounded-xl flex items-center justify-center">
           <FileText className="w-5 h-5" aria-hidden />
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <h1 className={`font-extrabold text-lg tracking-tight leading-none ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+            <h1 className={`font-semibold text-lg tracking-tight leading-none ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
               CV Builder
             </h1>
-            <span className="bg-emerald-500/20 text-emerald-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/30 uppercase tracking-widest">
+            <span className="bg-emerald-500/15 text-emerald-500 text-[10px] font-semibold px-2 py-0.5 rounded border border-emerald-500/30 uppercase tracking-widest">
               Pro
-            </span>
-            <span className="hidden sm:inline-flex items-center gap-1 bg-gradient-to-r from-sky-500/15 to-emerald-500/15 text-sky-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-sky-500/30 uppercase tracking-widest">
-              <Sparkles className="w-3 h-3" aria-hidden /> IA
             </span>
           </div>
           <p className={`text-xs mt-0.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-            {isFr ? 'Créateur de CV IA — Copilote, ATS & Export PDF' : 'AI CV Builder — Copilot, ATS & PDF Export'}
+            {isFr ? 'Éditeur, assistant & export PDF' : 'Editor, assistant & PDF export'}
           </p>
         </div>
       </div>
@@ -156,21 +153,21 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Right Controls */}
       <div className="flex items-center gap-2 flex-wrap">
-        {/* AI Assistant */}
+        {/* Assistant */}
         <button
           onClick={onOpenAiAssistant}
-          className="bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white text-xs font-bold px-3 py-2 rounded-lg border border-sky-400/40 transition flex items-center gap-1.5 shadow-lg shadow-sky-600/20 active:scale-95"
-          title={isFr ? 'Copilote IA : générez et améliorez vos contenus' : 'AI Copilot: generate and improve content'}
+          className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-2 rounded-lg transition flex items-center gap-1.5 active:scale-95"
+          title={isFr ? 'Assistant : générez et améliorez vos contenus' : 'Assistant: generate and improve content'}
         >
-          <Bot className="w-4 h-4" aria-hidden />
-          <span className="hidden md:inline">{isFr ? 'Copilote IA' : 'AI Copilot'}</span>
+          <MessagesSquare className="w-4 h-4" aria-hidden />
+          <span className="hidden md:inline">Assistant</span>
         </button>
 
         {/* Cover Letter */}
         <button
           onClick={onOpenCoverLetter}
           className={`${btnBgClass} text-xs font-semibold px-2.5 py-2 rounded-lg border transition flex items-center gap-1.5`}
-          title={isFr ? 'Générer une lettre de motivation avec l\'IA' : 'Generate an AI cover letter'}
+          title={isFr ? 'Générer une lettre de motivation' : 'Generate a cover letter'}
         >
           <Mail className="w-3.5 h-3.5 text-rose-400" aria-hidden />
           <span className="hidden lg:inline">{isFr ? 'Lettre' : 'Letter'}</span>

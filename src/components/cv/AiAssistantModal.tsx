@@ -68,8 +68,8 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
     {
       role: 'assistant',
       content: isFr
-        ? "Bonjour 👋 Je suis votre copilote CV. Je connais déjà le contenu de votre CV. Posez-moi une question ou choisissez une action rapide ci-dessous !"
-        : "Hello 👋 I'm your CV copilot. I already know the content of your resume. Ask me anything or pick a quick action below!"
+        ? "Bonjour 👋 Je suis votre assistant CV. Je connais déjà le contenu de votre CV. Posez-moi une question ou choisissez une action rapide ci-dessous !"
+        : "Hello 👋 I'm your CV assistant. I already know the content of your resume. Ask me anything or pick a quick action below!"
     }
   ]);
   const [input, setInput] = useState('');
@@ -114,8 +114,8 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
         {
           role: 'assistant',
           content: isFr
-            ? '⚠️ Erreur de connexion au service IA. Vérifiez votre connexion et réessayez.'
-            : '⚠️ AI service connection error. Check your connection and try again.'
+            ? '⚠️ Erreur de connexion. Vérifiez votre connexion et réessayez.'
+            : '⚠️ Connection error. Check your connection and try again.'
         }
       ]);
     } finally {
@@ -130,7 +130,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
       }`}
       role="dialog"
       aria-modal="true"
-      aria-label={isFr ? 'Copilote IA' : 'AI Copilot'}
+      aria-label={isFr ? 'Assistant CV' : 'CV Assistant'}
       onClick={onClose}
     >
       <div
@@ -145,7 +145,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
             </div>
             <div>
               <h2 className={`text-base font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                {isFr ? 'Copilote IA de CV' : 'CV AI Copilot'}
+                {isFr ? 'Assistant CV' : 'CV Assistant'}
               </h2>
               <p className={`text-[11px] flex items-center gap-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" aria-hidden />

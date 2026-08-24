@@ -114,7 +114,7 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
             }`}
           >
             <Bot className="w-3.5 h-3.5" aria-hidden />
-            {isFr ? 'Analyse IA + Offre' : 'AI + Job match'}
+            {isFr ? 'Matching d\'offre' : 'Job match'}
           </button>
         </div>
 
@@ -240,13 +240,13 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
               <div className="flex items-center gap-2">
                 <Bot className="w-4 h-4 text-emerald-500" aria-hidden />
                 <h3 className="text-xs font-bold uppercase tracking-wider">
-                  {isFr ? 'Matching IA avec une offre d\'emploi' : 'AI job offer matching'}
+                  {isFr ? "Adéquation avec une offre d'emploi" : 'Job offer matching'}
                 </h3>
               </div>
               <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                 {isFr
-                  ? "Collez le texte de l'offre d'emploi ci-dessous : l'IA analysera la compatibilité de votre CV avec le poste, identifiera les mots-clés manquants et vous donnera des recommandations concrètes."
-                  : 'Paste the job offer text below: the AI will analyze how well your CV matches the role, find missing keywords and give concrete recommendations.'}
+                  ? "Collez le texte de l'offre d'emploi ci-dessous : l'analyse évaluera la compatibilité de votre CV avec le poste, identifiera les mots-clés manquants et vous donnera des recommandations concrètes."
+                  : 'Paste the job offer text below: the analysis will evaluate how well your CV matches the role, find missing keywords and give concrete recommendations.'}
               </p>
               <textarea
                 rows={5}
@@ -279,7 +279,7 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
                   className="bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-lg transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {aiLoading ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden /> : <Sparkles className="w-4 h-4" aria-hidden />}
-                  {aiLoading ? (isFr ? 'Analyse en cours...' : 'Analyzing...') : isFr ? 'Lancer l\'analyse IA' : 'Run AI analysis'}
+                  {aiLoading ? (isFr ? 'Analyse en cours...' : 'Analyzing...') : isFr ? 'Lancer l\'analyse' : 'Run analysis'}
                 </button>
               </div>
             </div>

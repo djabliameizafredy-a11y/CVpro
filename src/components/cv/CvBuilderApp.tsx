@@ -220,7 +220,7 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
             ...prev.skills,
             {
               id: Date.now().toString(),
-              category: isFr ? "Compétences suggérées par l'IA" : 'AI-suggested skills',
+              category: isFr ? 'Compétences suggérées' : 'Suggested skills',
               tags
             }
           ]
@@ -238,11 +238,11 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
         }));
       }
 
-      toast({ title: isFr ? "Contenu généré par l'IA ✓" : 'AI content generated ✓' });
+      toast({ title: isFr ? 'Contenu généré ✓' : 'Content generated ✓' });
     } catch {
       toast({
-        title: isFr ? 'Erreur IA' : 'AI error',
-        description: isFr ? "L'IA n'a pas pu générer le contenu. Réessayez." : 'The AI could not generate content. Try again.',
+        title: isFr ? 'Erreur de génération' : 'Generation error',
+        description: isFr ? "Le contenu n'a pas pu être généré. Réessayez." : 'The content could not be generated. Try again.',
         variant: 'destructive'
       });
     } finally {

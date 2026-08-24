@@ -38,13 +38,10 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "CV Builder Pro — Créateur de CV IA",
+  title: "CV Builder Pro — Créateur de CV professionnel",
   description:
-    "Créez un CV professionnel en minutes : éditeur interactif, copilote IA, analyse ATS, 4 templates premium et export PDF/Image haute qualité.",
-  keywords: ["CV", "resume", "ATS", "AI", "PDF", "builder", "français", "english"],
-  icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
-  },
+    "Créez un CV professionnel en minutes : éditeur interactif, assistant rédactionnel, analyse ATS, 4 mises en page premium et export PDF/Image haute qualité.",
+  keywords: ["CV", "resume", "ATS", "PDF", "builder", "français", "english", "lettre de motivation"],
 };
 
 export default function RootLayout({

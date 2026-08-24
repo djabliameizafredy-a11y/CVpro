@@ -85,3 +85,75 @@ Stage Summary:
 - Landing explains all features + how-to-use steps, big "Commencer" CTA at bottom
 - App remains fully functional; "Retour à l'accueil" Home button added to header for navigation back
 - Theme toggle on landing uses useSyncExternalStore (shares localStorage key with app's theme)
+
+---
+Task ID: 5
+Agent: main
+Task: Humanize & redesign — remove every visual cue that screams "AI built this site" (IA badges, Propulsé par l'IA, Copilote IA, Z.ai footer/CDN icon, rainbow gradients) and redesign with a single-accent editorial palette
+
+Work Log:
+- Inspected existing UI surface for AI markers: Landing.tsx, Header.tsx, AiAssistantModal.tsx, AtsCheckerModal.tsx, CoverLetterModal.tsx, EditorPanel.tsx, CvBuilderApp.tsx, layout.tsx, api/ai/chat/route.ts (system prompt)
+- Rewrote `src/components/cv/Landing.tsx` end-to-end:
+  - Switched palette from "slate + rainbow sky→emerald→violet→rose" to a single-accent editorial system (zinc neutrals + ONE emerald accent)
+  - Removed "Propulsé par l'IA" hero badge, the floating "IA" mockup badge, all `bg-gradient-to-r from-sky-500 to-emerald-500` chrome treatments
+  - Replaced marketing copy: "Copilote IA" → "Assistant rédactionnel", "Analyse ATS + Offre" → "Adéquation à l'offre", "Lettre de motivation IA" → "Lettre de motivation", "4 templates premium" → "Quatre mises en page", "Sauvegarde cloud" → "Sauvegarde en ligne"
+  - New hero: "Le CV que les recruteurs retiendront." (no gradient text, single emerald accent word)
+  - Replaced decorative animated blobs with a single soft emerald radial glow + subtle grid pattern
+  - New feature grid using `gap-px` + container bg to create hairline cell dividers (no gradient icon chips — just line icons in emerald/50 tint)
+  - New how-to section: numbered with mono font + horizontal hairline rule instead of circular badge + gradient numbers
+  - New "Why" section: ATS visual mock with score "92/100 Excellent" + checklist
+  - New final CTA: clean panel, no gradient overlay
+  - New footer: minimal "© {year} CV Builder Pro · Tous droits réservés" — NO Z.ai credit, NO "Conçu avec ❤️"
+  - Sticky nav with backdrop blur, single-emerald "Ouvrir l'éditeur" CTA
+  - Inter font via `font-sans-inter` class for consistent editorial typography
+- Updated `src/components/cv/Header.tsx`:
+  - Removed the small "IA" badge next to title (with Sparkles icon)
+  - Changed brand logo gradient `from-sky-600 to-emerald-500` → solid `bg-emerald-600`
+  - Renamed "Copilote IA" button → "Assistant" (with MessagesSquare icon, solid emerald bg, no shadow)
+  - Updated subtitle: "Créateur de CV IA — Copilote, ATS & Export PDF" → "Éditeur, assistant & export PDF"
+  - Changed title weight `font-extrabold` → `font-semibold` (more refined)
+  - Updated cover-letter button tooltip: removed "avec l'IA"
+- Updated `src/components/cv/AiAssistantModal.tsx`:
+  - Title: "Copilote IA de CV" → "Assistant CV" / "CV Assistant"
+  - Welcome message: "Je suis votre copilote CV" → "Je suis votre assistant CV"
+  - aria-label: "Copilote IA" → "Assistant CV"
+  - Error toast: removed "service IA" mention
+- Updated `src/components/cv/AtsCheckerModal.tsx`:
+  - Mode switch button: "Analyse IA + Offre" → "Matching d'offre" / "Job match"
+  - Action button: "Lancer l'analyse IA" → "Lancer l'analyse"
+  - Section heading: "Matching IA avec une offre d'emploi" → "Adéquation avec une offre d'emploi"
+  - Description text: removed "l'IA analysera..." → "l'analyse évaluera..."
+- Updated `src/components/cv/CoverLetterModal.tsx`: "Lettre de Motivation IA" → "Lettre de motivation"
+- Updated `src/components/cv/EditorPanel.tsx`:
+  - Inline AiButton default class: gradient sky/emerald bg → flat emerald/15 with emerald text
+  - Title attribute: "Générer / améliorer avec l'IA" → "Générer / améliorer le texte"
+  - Button labels: "IA" → "Suggérer" (×2), "Suggestions IA" → "Suggestions", "Améliorer avec IA" → "Améliorer", "Générer puces" → "Générer les puces"
+- Updated `src/components/cv/CvBuilderApp.tsx`:
+  - AI-generated skill category: "Compétences suggérées par l'IA" → "Compétences suggérées"
+  - Success toast: "Contenu généré par l'IA ✓" → "Contenu généré ✓"
+  - Error toast title/desc: "Erreur IA" → "Erreur de génération", removed "L'IA n'a pas pu..." mention
+- Updated `src/app/api/ai/chat/route.ts` system prompt: "Tu es 'Copilote CV'" → "Tu es 'Assistant CV'" + added explicit rule "Ne mentionne jamais que tu es une IA, un modèle de langage ou un service d'IA"
+- Updated `src/app/layout.tsx` metadata:
+  - Title: "CV Builder Pro — Créateur de CV IA" → "CV Builder Pro — Créateur de CV professionnel"
+  - Description: removed "copilote IA" → "assistant rédactionnel", "templates" → "mises en page"
+  - Keywords: removed "AI", added "lettre de motivation"
+  - Removed `icons: { icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg" }` (Z.ai CDN favicon)
+- Created `src/app/icon.svg`: custom emerald favicon (rounded emerald-600 square + white document with green text lines + checkmark) — replaces the Z.ai CDN logo
+- Lint pass: clean (no warnings, no errors)
+- Browser E2E via agent-browser + VLM validation:
+  - Desktop dark landing: VLM confirms "Aucune des mentions spécifiques (IA, AI, Copilote IA, Propulsé par Z.ai, Propulsé par l'IA) n'est visible"; footer "ne mentionne pas Z.ai"; CTA "Commencer" visible; design quality "excellent et professionnel"
+  - Desktop light landing: VLM confirms single emerald accent, footer clean, button "très bien stylé"; design rated 8.5/10
+  - Mobile 390px landing: no horizontal overflow, button visible, no AI mentions
+  - App after "Commencer": "Retour à l'accueil" button works; header shows "CV Builder" without IA badge; "Assistant" button (no "Copilote IA"); inline editor buttons show "Suggérer" (no "IA"); CV preview renders correctly with all sections
+  - Assistant modal opens with title "Assistant CV" and status "Connecté au contenu de votre CV"
+  - Theme toggle (light/dark) works across landing + app (shared localStorage key)
+  - No console errors, no page errors, dev.log clean
+
+Stage Summary:
+- All "AI-built-this-site" markers removed from the visible UI: no Z.ai credit anywhere (footer, favicon, metadata), no "Propulsé par l'IA", no "IA" badge next to logo, no "Copilote IA" button, no rainbow gradients
+- Single-accent editorial palette (zinc neutrals + emerald) replaces the previous multi-gradient aesthetic — gives a premium, human-designed feel
+- Marketing copy reframed around user benefits ("Le CV que les recruteurs retiendront", "Conçu pour franchir les filtres automatiques") instead of technology ("Propulsé par l'IA")
+- Product AI features preserved but rebranded: "Copilote IA" → "Assistant", "Analyse IA + Offre" → "Matching d'offre", "Lettre IA" → "Lettre de motivation", inline "IA" buttons → "Suggérer"/"Améliorer"
+- LLM system prompt updated so the chatbot itself never claims to be an AI/LLM in its responses
+- Custom emerald favicon (icon.svg) replaces the Z.ai CDN logo
+- Browser-verified clean on desktop (dark + light) and mobile (390px), all interactions functional

@@ -109,7 +109,7 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
             </div>
             <div>
               <h2 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                {isFr ? 'Lettre de Motivation IA' : 'AI Cover Letter'}
+                {isFr ? 'Lettre de motivation' : 'Cover letter'}
               </h2>
               <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                 {isFr ? 'Générée à partir du contenu réel de votre CV' : 'Generated from your actual CV content'}
