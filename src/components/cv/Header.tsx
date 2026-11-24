@@ -1,26 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import {
-  FileText,
-  Wand2,
-  Trash2,
-  Printer,
-  Globe,
-  Sparkles,
-  Image as ImageIcon,
-  FileType,
-  ChevronDown,
-  Loader2,
-  Sun,
-  Moon,
-  MessagesSquare,
-  Mail,
-  CloudDownload,
-  CloudUpload,
-  Save,
-  Home
-} from 'lucide-react';
+import { FileText, PencilLine, Trash2, Printer, Globe, Lightbulb, Image as ImageIcon, FileType, ChevronDown, Loader2, Sun, Moon, MessageCircle, Mail, CloudDownload, CloudUpload, Save, Home } from 'lucide-react';
 import { CVData } from '@/lib/cv/types';
 
 interface HeaderProps {
@@ -81,8 +62,8 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const btnBgClass = isDarkMode
-    ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
-    : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300';
+    ? 'bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border-zinc-700'
+    : 'bg-zinc-100 hover:bg-zinc-200 text-zinc-800 border-zinc-300';
 
   const handleImportClick = () => {
     fileInputRef.current?.click();
@@ -107,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header
       className={`no-print px-4 md:px-6 py-3 flex flex-wrap justify-between items-center gap-3 sticky top-0 z-50 border-b transition-colors duration-200 shadow-md ${
-        isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+        isDarkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-200 text-zinc-900'
       }`}
       role="banner"
     >
@@ -128,14 +109,14 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <h1 className={`font-semibold text-lg tracking-tight leading-none ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+            <h1 className={`font-semibold text-lg tracking-tight leading-none ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
               CV Builder
             </h1>
             <span className="bg-emerald-500/15 text-emerald-500 text-[10px] font-semibold px-2 py-0.5 rounded border border-emerald-500/30 uppercase tracking-widest">
               Pro
             </span>
           </div>
-          <p className={`text-xs mt-0.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+          <p className={`text-xs mt-0.5 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
             {isFr ? 'Éditeur, assistant & export PDF' : 'Editor, assistant & PDF export'}
           </p>
         </div>
@@ -147,7 +128,7 @@ export const Header: React.FC<HeaderProps> = ({
         className={`hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold transition hover:scale-105 ${getScoreBadgeColor(atsScore)}`}
         title={isFr ? "Cliquez pour voir l'analyse ATS" : 'Click to view ATS score analysis'}
       >
-        <Sparkles className="w-3.5 h-3.5" aria-hidden />
+        <Lightbulb className="w-3.5 h-3.5" aria-hidden />
         <span>ATS {atsScore}%</span>
       </button>
 
@@ -159,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({
           className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-2 rounded-lg transition flex items-center gap-1.5 active:scale-95"
           title={isFr ? 'Assistant : générez et améliorez vos contenus' : 'Assistant: generate and improve content'}
         >
-          <MessagesSquare className="w-4 h-4" aria-hidden />
+          <MessageCircle className="w-4 h-4" aria-hidden />
           <span className="hidden md:inline">Assistant</span>
         </button>
 
@@ -174,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
 
         {/* Cloud: Save + Load */}
-        <div className="flex items-center rounded-lg overflow-hidden border border-slate-600/50">
+        <div className="flex items-center rounded-lg overflow-hidden border border-zinc-600/50">
           <button
             onClick={onSaveToCloud}
             disabled={isSavingCloud}
@@ -192,7 +173,7 @@ export const Header: React.FC<HeaderProps> = ({
             className={`${btnBgClass} border-0 rounded-l-none text-xs font-semibold px-2.5 py-2 transition flex items-center gap-1.5`}
             title={isFr ? 'Mes CV sauvegardés' : 'My saved CVs'}
           >
-            <CloudDownload className="w-3.5 h-3.5 text-sky-400" aria-hidden />
+            <CloudDownload className="w-3.5 h-3.5 text-emerald-400" aria-hidden />
           </button>
         </div>
 
@@ -204,7 +185,7 @@ export const Header: React.FC<HeaderProps> = ({
             title={isDarkMode ? (isFr ? 'Passer en Mode Clair' : 'Switch to Light Mode') : isDarkMode ? 'Passer en Mode Sombre' : 'Switch to Dark Mode'}
             aria-label={isFr ? 'Basculer le thème' : 'Toggle theme'}
           >
-            {isDarkMode ? <Sun className="w-3.5 h-3.5 text-amber-400" aria-hidden /> : <Moon className="w-3.5 h-3.5 text-slate-600" aria-hidden />}
+            {isDarkMode ? <Sun className="w-3.5 h-3.5 text-amber-400" aria-hidden /> : <Moon className="w-3.5 h-3.5 text-zinc-600" aria-hidden />}
             <span className="hidden sm:inline font-medium">{isDarkMode ? (isFr ? 'Clair' : 'Light') : isFr ? 'Sombre' : 'Dark'}</span>
           </button>
         )}
@@ -215,7 +196,7 @@ export const Header: React.FC<HeaderProps> = ({
           className={`${btnBgClass} text-xs font-semibold px-2.5 py-2 rounded-lg border transition flex items-center gap-1.5`}
           title={isFr ? 'Changer la langue (FR/EN)' : 'Switch language (FR/EN)'}
         >
-          <Globe className="w-3.5 h-3.5 text-sky-500" aria-hidden />
+          <Globe className="w-3.5 h-3.5 text-emerald-500" aria-hidden />
           <span>{cv.lang.toUpperCase()}</span>
         </button>
 
@@ -225,7 +206,7 @@ export const Header: React.FC<HeaderProps> = ({
           className={`${btnBgClass} text-xs font-semibold px-3 py-2 rounded-lg border transition flex items-center gap-1.5`}
           title={isFr ? "Charger les données d'exemple" : 'Load sample data'}
         >
-          <Wand2 className="w-3.5 h-3.5 text-amber-500" aria-hidden />
+          <PencilLine className="w-3.5 h-3.5 text-amber-500" aria-hidden />
           <span className="hidden md:inline">{isFr ? 'Exemple' : 'Sample'}</span>
         </button>
 
@@ -241,11 +222,11 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Export Dropdown Group */}
         <div className="relative">
-          <div className="inline-flex rounded-lg shadow-lg shadow-sky-600/20">
+          <div className="inline-flex rounded-lg shadow-lg shadow-emerald-600/20">
             <button
               onClick={onExportPdf}
               disabled={isExportingPdf || isExportingImage}
-              className="bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-3.5 py-2 rounded-l-lg transition flex items-center gap-2 active:scale-95 disabled:opacity-50"
+              className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3.5 py-2 rounded-l-lg transition flex items-center gap-2 active:scale-95 disabled:opacity-50"
             >
               {isExportingPdf ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden /> : <FileType className="w-4 h-4" aria-hidden />}
               <span>{isFr ? 'Télécharger PDF' : 'Download PDF'}</span>
@@ -253,7 +234,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={() => setIsExportMenuOpen(!isExportMenuOpen)}
-              className="bg-sky-700 hover:bg-sky-600 text-white px-2 py-2 rounded-r-lg border-l border-sky-500/50 transition flex items-center justify-center"
+              className="bg-emerald-700 hover:bg-emerald-600 text-white px-2 py-2 rounded-r-lg border-l border-emerald-500/50 transition flex items-center justify-center"
               title={isFr ? "Plus d'options d'export" : 'More export options'}
               aria-label={isFr ? 'Options export' : 'Export options'}
             >
@@ -265,7 +246,7 @@ export const Header: React.FC<HeaderProps> = ({
           {isExportMenuOpen && (
             <div
               className={`absolute right-0 mt-2 w-56 rounded-xl shadow-2xl z-50 py-1 overflow-hidden border ${
-                isDarkMode ? 'bg-slate-800 border-slate-700 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
+                isDarkMode ? 'bg-zinc-800 border-zinc-700 text-zinc-200' : 'bg-white border-zinc-200 text-zinc-800'
               }`}
               onMouseLeave={() => setIsExportMenuOpen(false)}
               role="menu"
@@ -277,13 +258,13 @@ export const Header: React.FC<HeaderProps> = ({
                 }}
                 disabled={isExportingPdf}
                 className={`w-full text-left px-4 py-2.5 text-xs flex items-center gap-2.5 transition disabled:opacity-50 ${
-                  isDarkMode ? 'hover:bg-slate-700 hover:text-white text-slate-200' : 'hover:bg-slate-100 hover:text-slate-900 text-slate-700'
+                  isDarkMode ? 'hover:bg-zinc-700 hover:text-white text-zinc-200' : 'hover:bg-zinc-100 hover:text-zinc-900 text-zinc-700'
                 }`}
               >
-                {isExportingPdf ? <Loader2 className="w-4 h-4 animate-spin text-sky-500" aria-hidden /> : <FileType className="w-4 h-4 text-sky-500" aria-hidden />}
+                {isExportingPdf ? <Loader2 className="w-4 h-4 animate-spin text-emerald-500" aria-hidden /> : <FileType className="w-4 h-4 text-emerald-500" aria-hidden />}
                 <div>
                   <div className="font-semibold">{isFr ? 'Document PDF (.pdf)' : 'PDF Document (.pdf)'}</div>
-                  <div className={`text-[10px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                  <div className={`text-[10px] ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                     {isFr ? 'Format vectoriel prêt à imprimer' : 'Print-ready vector format'}
                   </div>
                 </div>
@@ -297,14 +278,14 @@ export const Header: React.FC<HeaderProps> = ({
                 disabled={isExportingImage}
                 className={`w-full text-left px-4 py-2.5 text-xs flex items-center gap-2.5 transition border-t disabled:opacity-50 ${
                   isDarkMode
-                    ? 'border-slate-700/50 hover:bg-slate-700 hover:text-white text-slate-200'
-                    : 'border-slate-200 hover:bg-slate-100 hover:text-slate-900 text-slate-700'
+                    ? 'border-zinc-700/50 hover:bg-zinc-700 hover:text-white text-zinc-200'
+                    : 'border-zinc-200 hover:bg-zinc-100 hover:text-zinc-900 text-zinc-700'
                 }`}
               >
                 {isExportingImage ? <Loader2 className="w-4 h-4 animate-spin text-emerald-500" aria-hidden /> : <ImageIcon className="w-4 h-4 text-emerald-500" aria-hidden />}
                 <div>
                   <div className="font-semibold">{isFr ? 'Image HD (.png)' : 'HD Image (.png)'}</div>
-                  <div className={`text-[10px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                  <div className={`text-[10px] ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                     {isFr ? 'Haute définition 300 DPI' : 'High resolution 300 DPI'}
                   </div>
                 </div>
@@ -317,14 +298,14 @@ export const Header: React.FC<HeaderProps> = ({
                 }}
                 className={`w-full text-left px-4 py-2.5 text-xs flex items-center gap-2.5 transition border-t ${
                   isDarkMode
-                    ? 'border-slate-700/50 hover:bg-slate-700 hover:text-white text-slate-200'
-                    : 'border-slate-200 hover:bg-slate-100 hover:text-slate-900 text-slate-700'
+                    ? 'border-zinc-700/50 hover:bg-zinc-700 hover:text-white text-zinc-200'
+                    : 'border-zinc-200 hover:bg-zinc-100 hover:text-zinc-900 text-zinc-700'
                 }`}
               >
                 <Printer className="w-4 h-4 text-amber-500" aria-hidden />
                 <div>
                   <div className="font-semibold">{isFr ? 'Imprimer / Aperçu' : 'Print / Native Preview'}</div>
-                  <div className={`text-[10px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                  <div className={`text-[10px] ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                     {isFr ? "Dialogue d'impression système" : 'System print dialog'}
                   </div>
                 </div>
@@ -338,14 +319,14 @@ export const Header: React.FC<HeaderProps> = ({
                   }}
                   className={`w-full text-left px-4 py-2.5 text-xs flex items-center gap-2.5 transition border-t ${
                     isDarkMode
-                      ? 'border-slate-700/50 hover:bg-slate-700 hover:text-white text-slate-200'
-                      : 'border-slate-200 hover:bg-slate-100 hover:text-slate-900 text-slate-700'
+                      ? 'border-zinc-700/50 hover:bg-zinc-700 hover:text-white text-zinc-200'
+                      : 'border-zinc-200 hover:bg-zinc-100 hover:text-zinc-900 text-zinc-700'
                   }`}
                 >
-                  <CloudUpload className="w-4 h-4 text-violet-500" aria-hidden />
+                  <CloudUpload className="w-4 h-4 text-emerald-500" aria-hidden />
                   <div>
                     <div className="font-semibold">{isFr ? 'Export JSON (.json)' : 'Export JSON (.json)'}</div>
-                    <div className={`text-[10px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <div className={`text-[10px] ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                       {isFr ? 'Sauvegarde locale portable' : 'Portable local backup'}
                     </div>
                   </div>
@@ -360,14 +341,14 @@ export const Header: React.FC<HeaderProps> = ({
                   }}
                   className={`w-full text-left px-4 py-2.5 text-xs flex items-center gap-2.5 transition border-t ${
                     isDarkMode
-                      ? 'border-slate-700/50 hover:bg-slate-700 hover:text-white text-slate-200'
-                      : 'border-slate-200 hover:bg-slate-100 hover:text-slate-900 text-slate-700'
+                      ? 'border-zinc-700/50 hover:bg-zinc-700 hover:text-white text-zinc-200'
+                      : 'border-zinc-200 hover:bg-zinc-100 hover:text-zinc-900 text-zinc-700'
                   }`}
                 >
-                  <CloudDownload className="w-4 h-4 text-teal-500" aria-hidden />
+                  <CloudDownload className="w-4 h-4 text-emerald-500" aria-hidden />
                   <div>
                     <div className="font-semibold">{isFr ? 'Importer JSON' : 'Import JSON'}</div>
-                    <div className={`text-[10px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <div className={`text-[10px] ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                       {isFr ? 'Restaurer une sauvegarde' : 'Restore a backup'}
                     </div>
                   </div>

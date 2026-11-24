@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CheckCircle2, AlertCircle, Sparkles, Trophy, Lightbulb, Bot, Loader2, X } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Lightbulb, Trophy, UserRound, Loader2, X } from 'lucide-react';
 import { evaluateAtsScore, actionVerbsFr, actionVerbsEn } from '@/lib/cv/aiHelpers';
 import { CVData } from '@/lib/cv/types';
 
@@ -43,7 +43,7 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
   const result = evaluateAtsScore(cv);
   const actionVerbs = isFr ? actionVerbsFr : actionVerbsEn;
 
-  const panelClass = isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800';
+  const panelClass = isDarkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-200 text-zinc-800';
 
   const runAnalysis = async () => {
     if (jobDescription.trim().length < 30) return;
@@ -53,7 +53,7 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
   return (
     <div
       className={`fixed inset-0 z-[60] flex items-center justify-center p-4 backdrop-blur-sm ${
-        isDarkMode ? 'bg-slate-950/80' : 'bg-slate-900/50'
+        isDarkMode ? 'bg-zinc-950/80' : 'bg-zinc-900/50'
       }`}
       role="dialog"
       aria-modal="true"
@@ -65,23 +65,23 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className={`flex justify-between items-center border-b pb-4 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
+        <div className={`flex justify-between items-center border-b pb-4 ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'}`}>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-sky-500/10 text-sky-500 rounded-xl border border-sky-500/20">
-              <Sparkles className="w-6 h-6" aria-hidden />
+            <div className="p-2.5 bg-emerald-500/10 text-emerald-500 rounded-xl border border-emerald-500/20">
+              <Lightbulb className="w-6 h-6" aria-hidden />
             </div>
             <div>
-              <h2 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              <h2 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                 {isFr ? 'Analyse ATS & Score de CV' : 'ATS Analysis & CV Score'}
               </h2>
-              <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+              <p className={`text-xs ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                 {isFr ? 'Optimisez votre CV pour passer les filtres automatiques' : 'Optimize your resume to pass automated recruitment filters'}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className={`p-2 rounded-lg transition ${isDarkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'}`}
+            className={`p-2 rounded-lg transition ${isDarkMode ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'}`}
             aria-label={isFr ? 'Fermer' : 'Close'}
           >
             <X className="w-5 h-5" aria-hidden />
@@ -89,15 +89,15 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
         </div>
 
         {/* Mode switch */}
-        <div className={`flex gap-2 p-1 rounded-xl border ${isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-200'}`}>
+        <div className={`flex gap-2 p-1 rounded-xl border ${isDarkMode ? 'bg-zinc-950 border-zinc-800' : 'bg-zinc-100 border-zinc-200'}`}>
           <button
             onClick={() => setMode('classic')}
             className={`flex-1 px-3 py-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 ${
               mode === 'classic'
-                ? 'bg-sky-600 text-white shadow'
+                ? 'bg-emerald-600 text-white shadow'
                 : isDarkMode
-                  ? 'text-slate-400 hover:text-white'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'text-zinc-400 hover:text-white'
+                  : 'text-zinc-600 hover:text-zinc-900'
             }`}
           >
             <Trophy className="w-3.5 h-3.5" aria-hidden />
@@ -107,13 +107,13 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
             onClick={() => setMode('ai')}
             className={`flex-1 px-3 py-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 ${
               mode === 'ai'
-                ? 'bg-gradient-to-r from-sky-600 to-emerald-600 text-white shadow'
+                ? 'bg-gradient-to-r from-emerald-600 to-emerald-600 text-white shadow'
                 : isDarkMode
-                  ? 'text-slate-400 hover:text-white'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'text-zinc-400 hover:text-white'
+                  : 'text-zinc-600 hover:text-zinc-900'
             }`}
           >
-            <Bot className="w-3.5 h-3.5" aria-hidden />
+            <UserRound className="w-3.5 h-3.5" aria-hidden />
             {isFr ? 'Matching d\'offre' : 'Job match'}
           </button>
         </div>
@@ -124,13 +124,13 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
             {/* Score Card */}
             <div
               className={`border rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-6 ${
-                isDarkMode ? 'bg-slate-800/60 border-slate-700/60' : 'bg-slate-50 border-slate-200'
+                isDarkMode ? 'bg-zinc-800/60 border-zinc-700/60' : 'bg-zinc-50 border-zinc-200'
               }`}
             >
               <div className="flex items-center gap-4">
                 <div
-                  className={`relative flex items-center justify-center w-20 h-20 rounded-full border-4 border-sky-500 text-2xl font-black shadow-inner ${
-                    isDarkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'
+                  className={`relative flex items-center justify-center w-20 h-20 rounded-full border-4 border-emerald-500 text-2xl font-black shadow-inner ${
+                    isDarkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-900'
                   }`}
                   role="status"
                   aria-label={`ATS ${result.score}%`}
@@ -138,16 +138,16 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
                   {result.score}%
                 </div>
                 <div>
-                  <div className={`text-xs font-semibold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                  <div className={`text-xs font-semibold uppercase tracking-wider ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                     {isFr ? 'Évaluation Globale' : 'Overall Assessment'}
                   </div>
-                  <div className={`text-xl font-bold capitalize mt-0.5 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                  <div className={`text-xl font-bold capitalize mt-0.5 ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                     {result.level === 'excellent' && (isFr ? 'Excellent 🚀' : 'Excellent 🚀')}
                     {result.level === 'good' && (isFr ? 'Très bon 👍' : 'Great Job 👍')}
                     {result.level === 'average' && (isFr ? 'Moyen ⚠️' : 'Average ⚠️')}
                     {result.level === 'needs_work' && (isFr ? 'À compléter 📝' : 'Needs Work 📝')}
                   </div>
-                  <p className={`text-xs mt-1 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                  <p className={`text-xs mt-1 ${isDarkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
                     {result.score >= 80
                       ? isFr
                         ? 'Votre CV comporte tous les éléments clés pour être bien indexé par les ATS.'
@@ -166,7 +166,7 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
 
             {/* Checks List */}
             <div className="space-y-3">
-              <h3 className={`text-xs font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+              <h3 className={`text-xs font-bold uppercase tracking-wider ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                 {isFr ? 'Points de contrôle' : 'Checklist Criteria'}
               </h3>
               <div className="grid gap-2.5">
@@ -179,8 +179,8 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
                           ? 'bg-emerald-950/30 border-emerald-800/40 text-emerald-200'
                           : 'bg-emerald-50 border-emerald-200 text-emerald-800'
                         : isDarkMode
-                          ? 'bg-slate-800/50 border-slate-700/80 text-slate-300'
-                          : 'bg-slate-50 border-slate-200 text-slate-700'
+                          ? 'bg-zinc-800/50 border-zinc-700/80 text-zinc-300'
+                          : 'bg-zinc-50 border-zinc-200 text-zinc-700'
                     }`}
                   >
                     {c.passed ? (
@@ -191,13 +191,13 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
                     <div className="text-xs flex-1">
                       <div
                         className={`font-bold flex justify-between items-center ${
-                          c.passed ? (isDarkMode ? 'text-emerald-100' : 'text-emerald-900') : isDarkMode ? 'text-white' : 'text-slate-900'
+                          c.passed ? (isDarkMode ? 'text-emerald-100' : 'text-emerald-900') : isDarkMode ? 'text-white' : 'text-zinc-900'
                         }`}
                       >
                         <span>{c.label}</span>
                         <span className="text-[10px] font-mono opacity-80">+{c.points} pts</span>
                       </div>
-                      {!c.passed && <p className={`mt-1 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>{c.recommendation}</p>}
+                      {!c.passed && <p className={`mt-1 leading-relaxed ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{c.recommendation}</p>}
                     </div>
                   </div>
                 ))}
@@ -205,12 +205,12 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
             </div>
 
             {/* Action verbs */}
-            <div className={`border rounded-xl p-4 space-y-2 ${isDarkMode ? 'bg-slate-800/40 border-slate-700/60' : 'bg-slate-50 border-slate-200'}`}>
-              <div className="flex items-center gap-2 text-xs font-bold text-sky-500 uppercase tracking-wider">
+            <div className={`border rounded-xl p-4 space-y-2 ${isDarkMode ? 'bg-zinc-800/40 border-zinc-700/60' : 'bg-zinc-50 border-zinc-200'}`}>
+              <div className="flex items-center gap-2 text-xs font-bold text-emerald-500 uppercase tracking-wider">
                 <Lightbulb className="w-4 h-4" aria-hidden />
                 <span>{isFr ? "Verbes d'action recommandés" : 'Recommended Action Verbs'}</span>
               </div>
-              <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+              <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
                 {isFr ? 'Utilisez ces verbes puissants en début de puces pour décrire vos réussites :' : 'Start your bullet points with these strong action verbs:'}
               </p>
               <div className="flex flex-wrap gap-1.5 pt-1">
@@ -218,7 +218,7 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
                   <span
                     key={verb}
                     className={`border px-2.5 py-1 rounded-md text-xs font-medium ${
-                      isDarkMode ? 'bg-slate-900 text-sky-300 border-slate-700' : 'bg-white text-sky-700 border-slate-200'
+                      isDarkMode ? 'bg-zinc-900 text-emerald-300 border-zinc-700' : 'bg-white text-emerald-700 border-zinc-200'
                     }`}
                   >
                     {verb}
@@ -234,16 +234,16 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
           <div className="space-y-4">
             <div
               className={`border rounded-xl p-4 space-y-3 ${
-                isDarkMode ? 'bg-gradient-to-br from-slate-800/80 to-slate-900 border-slate-700' : 'bg-gradient-to-br from-sky-50 to-emerald-50 border-slate-200'
+                isDarkMode ? 'bg-gradient-to-br from-zinc-800/80 to-zinc-900 border-zinc-700' : 'bg-gradient-to-br from-emerald-50 to-emerald-50 border-zinc-200'
               }`}
             >
               <div className="flex items-center gap-2">
-                <Bot className="w-4 h-4 text-emerald-500" aria-hidden />
+                <UserRound className="w-4 h-4 text-emerald-500" aria-hidden />
                 <h3 className="text-xs font-bold uppercase tracking-wider">
                   {isFr ? "Adéquation avec une offre d'emploi" : 'Job offer matching'}
                 </h3>
               </div>
-              <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+              <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
                 {isFr
                   ? "Collez le texte de l'offre d'emploi ci-dessous : l'analyse évaluera la compatibilité de votre CV avec le poste, identifiera les mots-clés manquants et vous donnera des recommandations concrètes."
                   : 'Paste the job offer text below: the analysis will evaluate how well your CV matches the role, find missing keywords and give concrete recommendations.'}
@@ -259,8 +259,8 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
                 }
                 className={`w-full rounded-lg px-3 py-2 text-xs leading-relaxed ${
                   isDarkMode
-                    ? 'bg-slate-950 border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500'
-                    : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-500'
+                    ? 'bg-zinc-950 border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500'
+                    : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-emerald-500'
                 }`}
               />
               <div className="flex items-center justify-between gap-3">
@@ -270,15 +270,15 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
                       ? `Minimum 30 caractères (${jobDescription.trim().length}/30)`
                       : `Minimum 30 characters (${jobDescription.trim().length}/30)`
                     : isFr
-                      ? 'Prêt à analyser ✓'
-                      : 'Ready to analyze ✓'}
+                      ? 'Prêt à analyser'
+                      : 'Ready to analyze'}
                 </span>
                 <button
                   onClick={runAnalysis}
                   disabled={jobDescription.trim().length < 30 || aiLoading}
-                  className="bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-lg transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-gradient-to-r from-emerald-600 to-emerald-600 hover:from-emerald-500 hover:to-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-lg transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {aiLoading ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden /> : <Sparkles className="w-4 h-4" aria-hidden />}
+                  {aiLoading ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden /> : <Lightbulb className="w-4 h-4" aria-hidden />}
                   {aiLoading ? (isFr ? 'Analyse en cours...' : 'Analyzing...') : isFr ? 'Lancer l\'analyse' : 'Run analysis'}
                 </button>
               </div>
@@ -289,10 +289,10 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
             )}
 
             {aiLoading && (
-              <div className={`rounded-xl border p-4 space-y-3 ${isDarkMode ? 'border-slate-700 bg-slate-800/40' : 'border-slate-200 bg-slate-50'}`}>
-                <div className="h-3 rounded ai-shimmer w-3/4" />
-                <div className="h-3 rounded ai-shimmer w-full" />
-                <div className="h-3 rounded ai-shimmer w-5/6" />
+              <div className={`rounded-xl border p-4 space-y-3 ${isDarkMode ? 'border-zinc-700 bg-zinc-800/40' : 'border-zinc-200 bg-zinc-50'}`}>
+                <div className="h-3 rounded animate-pulse w-3/4" />
+                <div className="h-3 rounded animate-pulse w-full" />
+                <div className="h-3 rounded animate-pulse w-5/6" />
               </div>
             )}
 
@@ -301,7 +301,7 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
                 {/* AI score */}
                 <div
                   className={`border rounded-xl p-5 flex items-center gap-5 ${
-                    isDarkMode ? 'bg-slate-800/60 border-slate-700/60' : 'bg-white border-slate-200 shadow-2xs'
+                    isDarkMode ? 'bg-zinc-800/60 border-zinc-700/60' : 'bg-white border-zinc-200 shadow-2xs'
                   }`}
                 >
                   <div
@@ -316,7 +316,7 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
                   >
                     {aiResult.score}%
                   </div>
-                  <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{aiResult.summary}</p>
+                  <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{aiResult.summary}</p>
                 </div>
 
                 {/* Strengths */}
@@ -355,8 +355,8 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
 
                 {/* Keywords */}
                 {aiResult.keywords.length > 0 && (
-                  <div className={`rounded-xl border p-4 space-y-2 ${isDarkMode ? 'bg-slate-800/40 border-slate-700/60' : 'bg-slate-50 border-slate-200'}`}>
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-sky-500 flex items-center gap-1.5">
+                  <div className={`rounded-xl border p-4 space-y-2 ${isDarkMode ? 'bg-zinc-800/40 border-zinc-700/60' : 'bg-zinc-50 border-zinc-200'}`}>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-500 flex items-center gap-1.5">
                       <Lightbulb className="w-4 h-4" aria-hidden />
                       {isFr ? 'Mots-clés à ajouter au CV' : 'Keywords to add to your CV'}
                     </h4>
@@ -365,7 +365,7 @@ export const AtsCheckerModal: React.FC<AtsCheckerModalProps> = ({
                         <span
                           key={i}
                           className={`border px-2.5 py-1 rounded-md text-xs font-medium ${
-                            isDarkMode ? 'bg-slate-900 text-sky-300 border-slate-700' : 'bg-white text-sky-700 border-slate-200'
+                            isDarkMode ? 'bg-zinc-900 text-emerald-300 border-zinc-700' : 'bg-white text-emerald-700 border-zinc-200'
                           }`}
                         >
                           {k}

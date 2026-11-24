@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Mail, Loader2, Sparkles, Copy, Download, RefreshCw } from 'lucide-react';
+import { X, Mail, Loader2, Lightbulb, Copy, Download, RefreshCw } from 'lucide-react';
 import { CVData } from '@/lib/cv/types';
 
 interface CoverLetterModalProps {
@@ -32,10 +32,10 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
 
   if (!isOpen) return null;
 
-  const panelClass = isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800';
+  const panelClass = isDarkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-200 text-zinc-800';
   const inputClass = isDarkMode
-    ? 'bg-slate-950 border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500'
-    : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-500';
+    ? 'bg-zinc-950 border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500'
+    : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-emerald-500';
 
   const generate = async () => {
     setIsLoading(true);
@@ -90,7 +90,7 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
   return (
     <div
       className={`fixed inset-0 z-[60] flex items-center justify-center p-4 backdrop-blur-sm ${
-        isDarkMode ? 'bg-slate-950/80' : 'bg-slate-900/50'
+        isDarkMode ? 'bg-zinc-950/80' : 'bg-zinc-900/50'
       }`}
       role="dialog"
       aria-modal="true"
@@ -102,23 +102,23 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className={`flex justify-between items-center border-b pb-4 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
+        <div className={`flex justify-between items-center border-b pb-4 ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'}`}>
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-rose-500/10 text-rose-500 rounded-xl border border-rose-500/20">
               <Mail className="w-6 h-6" aria-hidden />
             </div>
             <div>
-              <h2 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              <h2 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                 {isFr ? 'Lettre de motivation' : 'Cover letter'}
               </h2>
-              <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+              <p className={`text-xs ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                 {isFr ? 'Générée à partir du contenu réel de votre CV' : 'Generated from your actual CV content'}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className={`p-2 rounded-lg transition ${isDarkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'}`}
+            className={`p-2 rounded-lg transition ${isDarkMode ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'}`}
             aria-label={isFr ? 'Fermer' : 'Close'}
           >
             <X className="w-5 h-5" aria-hidden />
@@ -127,7 +127,7 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
 
         {/* Tone selector */}
         <div>
-          <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+          <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
             {isFr ? 'Ton de la lettre' : 'Letter tone'}
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -139,12 +139,12 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
                   tone === t.id
                     ? 'bg-rose-600 border-rose-400 text-white shadow-lg'
                     : isDarkMode
-                      ? 'bg-slate-800 border-slate-700 text-slate-300 hover:border-slate-500'
-                      : 'bg-slate-50 border-slate-300 text-slate-700 hover:border-slate-400'
+                      ? 'bg-zinc-800 border-zinc-700 text-zinc-300 hover:border-zinc-500'
+                      : 'bg-zinc-50 border-zinc-300 text-zinc-700 hover:border-zinc-400'
                 }`}
               >
                 <span className="block">{isFr ? t.fr : t.en}</span>
-                <span className={`block text-[9px] font-normal mt-0.5 ${tone === t.id ? 'text-white/75' : isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                <span className={`block text-[9px] font-normal mt-0.5 ${tone === t.id ? 'text-white/75' : isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
                   {isFr ? t.hintFr : t.hintEn}
                 </span>
               </button>
@@ -154,7 +154,7 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
 
         {/* Company name */}
         <div>
-          <label className={`block text-xs font-bold uppercase tracking-wider mb-1.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`} htmlFor="company-name">
+          <label className={`block text-xs font-bold uppercase tracking-wider mb-1.5 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`} htmlFor="company-name">
             {isFr ? "Nom de l'entreprise (optionnel)" : 'Company name (optional)'}
           </label>
           <input
@@ -169,7 +169,7 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
 
         {/* Job description */}
         <div>
-          <label className={`block text-xs font-bold uppercase tracking-wider mb-1.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`} htmlFor="job-desc">
+          <label className={`block text-xs font-bold uppercase tracking-wider mb-1.5 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`} htmlFor="job-desc">
             {isFr ? "Offre d'emploi visée (optionnel, pour personnaliser)" : 'Target job offer (optional, to personalize)'}
           </label>
           <textarea
@@ -188,7 +188,7 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
           disabled={isLoading}
           className="w-full bg-gradient-to-r from-rose-600 to-orange-500 hover:from-rose-500 hover:to-orange-400 text-white text-sm font-bold px-4 py-3 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50 shadow-lg shadow-rose-600/20"
         >
-          {isLoading ? <Loader2 className="w-5 h-5 animate-spin" aria-hidden /> : <Sparkles className="w-5 h-5" aria-hidden />}
+          {isLoading ? <Loader2 className="w-5 h-5 animate-spin" aria-hidden /> : <Lightbulb className="w-5 h-5" aria-hidden />}
           {isLoading
             ? isFr
               ? 'Rédaction en cours...'
@@ -206,12 +206,12 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
 
         {/* Result */}
         {isLoading && (
-          <div className={`rounded-xl border p-5 space-y-3 ${isDarkMode ? 'border-slate-700 bg-slate-800/40' : 'border-slate-200 bg-slate-50'}`}>
-            <div className="h-3 rounded ai-shimmer w-1/2" />
-            <div className="h-3 rounded ai-shimmer w-full" />
-            <div className="h-3 rounded ai-shimmer w-11/12" />
-            <div className="h-3 rounded ai-shimmer w-4/5" />
-            <div className="h-3 rounded ai-shimmer w-2/3" />
+          <div className={`rounded-xl border p-5 space-y-3 ${isDarkMode ? 'border-zinc-700 bg-zinc-800/40' : 'border-zinc-200 bg-zinc-50'}`}>
+            <div className="h-3 rounded animate-pulse w-1/2" />
+            <div className="h-3 rounded animate-pulse w-full" />
+            <div className="h-3 rounded animate-pulse w-11/12" />
+            <div className="h-3 rounded animate-pulse w-4/5" />
+            <div className="h-3 rounded animate-pulse w-2/3" />
           </div>
         )}
 
@@ -219,7 +219,7 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
           <div className="space-y-3 animate-fade-in">
             <div
               className={`border rounded-xl p-5 text-xs leading-relaxed whitespace-pre-wrap font-serif-lora ${
-                isDarkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-white border-slate-200 text-slate-800 shadow-2xs'
+                isDarkMode ? 'bg-zinc-950 border-zinc-700 text-zinc-200' : 'bg-white border-zinc-200 text-zinc-800 shadow-2xs'
               }`}
             >
               {letter}
@@ -231,19 +231,19 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
                   copied
                     ? 'bg-emerald-600 text-white border-emerald-500'
                     : isDarkMode
-                      ? 'bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700'
-                      : 'bg-slate-100 text-slate-800 border-slate-300 hover:bg-slate-200'
+                      ? 'bg-zinc-800 text-zinc-200 border-zinc-700 hover:bg-zinc-700'
+                      : 'bg-zinc-100 text-zinc-800 border-zinc-300 hover:bg-zinc-200'
                 }`}
               >
                 <Copy className="w-4 h-4" aria-hidden />
-                {copied ? (isFr ? 'Copié ✓' : 'Copied ✓') : isFr ? 'Copier' : 'Copy'}
+                {copied ? (isFr ? 'Copié' : 'Copied') : isFr ? 'Copier' : 'Copy'}
               </button>
               <button
                 onClick={downloadLetter}
                 className={`flex-1 text-xs font-bold px-4 py-2.5 rounded-lg border transition flex items-center justify-center gap-2 ${
                   isDarkMode
-                    ? 'bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700'
-                    : 'bg-slate-100 text-slate-800 border-slate-300 hover:bg-slate-200'
+                    ? 'bg-zinc-800 text-zinc-200 border-zinc-700 hover:bg-zinc-700'
+                    : 'bg-zinc-100 text-zinc-800 border-zinc-300 hover:bg-zinc-200'
                 }`}
               >
                 <Download className="w-4 h-4" aria-hidden />
@@ -253,8 +253,8 @@ export const CoverLetterModal: React.FC<CoverLetterModalProps> = ({ cv, isOpen, 
                 onClick={generate}
                 className={`text-xs font-bold px-4 py-2.5 rounded-lg border transition flex items-center justify-center gap-2 ${
                   isDarkMode
-                    ? 'bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700'
-                    : 'bg-slate-100 text-slate-800 border-slate-300 hover:bg-slate-200'
+                    ? 'bg-zinc-800 text-zinc-200 border-zinc-700 hover:bg-zinc-700'
+                    : 'bg-zinc-100 text-zinc-800 border-zinc-300 hover:bg-zinc-200'
                 }`}
                 title={isFr ? 'Régénérer' : 'Regenerate'}
               >

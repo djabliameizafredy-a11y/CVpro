@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Bot, X, Send, Loader2, Sparkles, FileText, Wand2, Code, Languages, Mail } from 'lucide-react';
+import { UserRound, X, Send, Loader2, Lightbulb, FileText, PencilLine, Code, Languages, Mail } from 'lucide-react';
 import { CVData } from '@/lib/cv/types';
 
 interface ChatMessage {
@@ -20,8 +20,8 @@ interface AiAssistantModalProps {
 const QUICK_ACTIONS_FR = [
   { id: 'summary', label: 'Rédiger mon profil professionnel', icon: FileText },
   { id: 'skills', label: 'Suggérer des compétences clés', icon: Code },
-  { id: 'improve', label: 'Améliorer mes expériences', icon: Wand2 },
-  { id: 'ats', label: 'Conseils anti-ATS', icon: Sparkles },
+  { id: 'improve', label: 'Améliorer mes expériences', icon: PencilLine },
+  { id: 'ats', label: 'Conseils anti-ATS', icon: Lightbulb },
   { id: 'translate', label: 'Traduire mon CV en anglais', icon: Languages },
   { id: 'letter', label: 'Aide lettre de motivation', icon: Mail }
 ] as const;
@@ -29,8 +29,8 @@ const QUICK_ACTIONS_FR = [
 const QUICK_ACTIONS_EN = [
   { id: 'summary', label: 'Write my professional summary', icon: FileText },
   { id: 'skills', label: 'Suggest key skills', icon: Code },
-  { id: 'improve', label: 'Improve my experience', icon: Wand2 },
-  { id: 'ats', label: 'Anti-ATS tips', icon: Sparkles },
+  { id: 'improve', label: 'Improve my experience', icon: PencilLine },
+  { id: 'ats', label: 'Anti-ATS tips', icon: Lightbulb },
   { id: 'translate', label: 'Translate my CV to French', icon: Languages },
   { id: 'letter', label: 'Cover letter help', icon: Mail }
 ] as const;
@@ -68,8 +68,8 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
     {
       role: 'assistant',
       content: isFr
-        ? "Bonjour 👋 Je suis votre assistant CV. Je connais déjà le contenu de votre CV. Posez-moi une question ou choisissez une action rapide ci-dessous !"
-        : "Hello 👋 I'm your CV assistant. I already know the content of your resume. Ask me anything or pick a quick action below!"
+        ? "Bonjour, Je suis votre assistant CV. Je connais déjà le contenu de votre CV. Posez-moi une question ou choisissez une action rapide ci-dessous !"
+        : "Hello, I'm your CV assistant. I already know the content of your resume. Ask me anything or pick a quick action below!"
     }
   ]);
   const [input, setInput] = useState('');
@@ -77,9 +77,9 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const quickActions = isFr ? QUICK_ACTIONS_FR : QUICK_ACTIONS_EN;
-  const panelClass = isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800';
-  const userBubble = 'bg-sky-600 text-white rounded-2xl rounded-br-sm';
-  const aiBubble = isDarkMode ? 'bg-slate-800 text-slate-100 border border-slate-700 rounded-2xl rounded-bl-sm' : 'bg-slate-100 text-slate-800 border border-slate-200 rounded-2xl rounded-bl-sm';
+  const panelClass = isDarkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-200 text-zinc-800';
+  const userBubble = 'bg-emerald-600 text-white rounded-2xl rounded-br-sm';
+  const aiBubble = isDarkMode ? 'bg-zinc-800 text-zinc-100 border border-zinc-700 rounded-2xl rounded-bl-sm' : 'bg-zinc-100 text-zinc-800 border border-zinc-200 rounded-2xl rounded-bl-sm';
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -126,7 +126,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
   return (
     <div
       className={`fixed inset-0 z-[60] flex items-center justify-center p-4 backdrop-blur-sm ${
-        isDarkMode ? 'bg-slate-950/80' : 'bg-slate-900/50'
+        isDarkMode ? 'bg-zinc-950/80' : 'bg-zinc-900/50'
       }`}
       role="dialog"
       aria-modal="true"
@@ -138,16 +138,16 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className={`flex justify-between items-center px-5 py-4 border-b shrink-0 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
+        <div className={`flex justify-between items-center px-5 py-4 border-b shrink-0 ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'}`}>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-gradient-to-br from-sky-500 to-emerald-500 text-white rounded-xl shadow-lg shadow-sky-500/20">
-              <Bot className="w-5 h-5" aria-hidden />
+            <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-emerald-500 text-white rounded-xl shadow-lg shadow-emerald-500/20">
+              <UserRound className="w-5 h-5" aria-hidden />
             </div>
             <div>
-              <h2 className={`text-base font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              <h2 className={`text-base font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                 {isFr ? 'Assistant CV' : 'CV Assistant'}
               </h2>
-              <p className={`text-[11px] flex items-center gap-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+              <p className={`text-[11px] flex items-center gap-1 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" aria-hidden />
                 {isFr ? 'Connecté au contenu de votre CV' : 'Connected to your CV content'}
               </p>
@@ -155,7 +155,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
           </div>
           <button
             onClick={onClose}
-            className={`p-2 rounded-lg transition ${isDarkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'}`}
+            className={`p-2 rounded-lg transition ${isDarkMode ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'}`}
             aria-label={isFr ? 'Fermer' : 'Close'}
           >
             <X className="w-5 h-5" aria-hidden />
@@ -163,7 +163,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
         </div>
 
         {/* Quick actions */}
-        <div className={`px-4 py-3 border-b shrink-0 ${isDarkMode ? 'border-slate-800 bg-slate-950/50' : 'border-slate-200 bg-slate-50'}`}>
+        <div className={`px-4 py-3 border-b shrink-0 ${isDarkMode ? 'border-zinc-800 bg-zinc-950/50' : 'border-zinc-200 bg-zinc-50'}`}>
           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-0.5">
             {quickActions.map((action) => {
               const Icon = action.icon;
@@ -174,8 +174,8 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
                   disabled={isLoading}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] font-semibold whitespace-nowrap transition disabled:opacity-50 ${
                     isDarkMode
-                      ? 'bg-slate-900 text-slate-300 border-slate-700 hover:border-sky-500 hover:text-sky-400'
-                      : 'bg-white text-slate-700 border-slate-300 hover:border-sky-500 hover:text-sky-600'
+                      ? 'bg-zinc-900 text-zinc-300 border-zinc-700 hover:border-emerald-500 hover:text-emerald-400'
+                      : 'bg-white text-zinc-700 border-zinc-300 hover:border-emerald-500 hover:text-emerald-600'
                   }`}
                 >
                   <Icon className="w-3 h-3 shrink-0" aria-hidden />
@@ -191,8 +191,8 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
           {messages.map((msg, idx) => (
             <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               {msg.role === 'assistant' && (
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-sky-500 to-emerald-500 flex items-center justify-center shrink-0 mr-2 self-end">
-                  <Bot className="w-4 h-4 text-white" aria-hidden />
+                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-500 flex items-center justify-center shrink-0 mr-2 self-end">
+                  <UserRound className="w-4 h-4 text-white" aria-hidden />
                 </div>
               )}
               <div className={`px-4 py-2.5 max-w-[80%] text-xs leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? userBubble : aiBubble}`}>
@@ -202,20 +202,20 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
           ))}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-sky-500 to-emerald-500 flex items-center justify-center shrink-0 mr-2 self-end">
-                <Bot className="w-4 h-4 text-white" aria-hidden />
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-500 flex items-center justify-center shrink-0 mr-2 self-end">
+                <UserRound className="w-4 h-4 text-white" aria-hidden />
               </div>
               <div className={`px-4 py-3 flex items-center gap-1.5 ${aiBubble}`}>
-                <span className="w-2 h-2 rounded-full bg-sky-500 animate-bounce" style={{ animationDelay: '0ms' }} />
-                <span className="w-2 h-2 rounded-full bg-sky-500 animate-bounce" style={{ animationDelay: '150ms' }} />
-                <span className="w-2 h-2 rounded-full bg-sky-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
           )}
         </div>
 
         {/* Input */}
-        <div className={`p-3 border-t shrink-0 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
+        <div className={`p-3 border-t shrink-0 ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'}`}>
           <div className="flex items-center gap-2">
             <input
               type="text"
@@ -230,15 +230,15 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ cv, isOpen, 
               placeholder={isFr ? 'Posez votre question sur votre CV...' : 'Ask anything about your CV...'}
               className={`flex-1 rounded-xl px-4 py-2.5 text-xs ${
                 isDarkMode
-                  ? 'bg-slate-800 border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500'
-                  : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-500'
+                  ? 'bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500'
+                  : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-emerald-500'
               } border`}
               aria-label={isFr ? 'Message' : 'Message'}
             />
             <button
               onClick={() => sendMessage(input)}
               disabled={isLoading || !input.trim()}
-              className="bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white p-2.5 rounded-xl transition disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+              className="bg-gradient-to-r from-emerald-600 to-emerald-600 hover:from-emerald-500 hover:to-emerald-500 text-white p-2.5 rounded-xl transition disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
               aria-label={isFr ? 'Envoyer' : 'Send'}
             >
               {isLoading ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden /> : <Send className="w-4 h-4" aria-hidden />}

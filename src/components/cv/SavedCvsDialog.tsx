@@ -19,7 +19,7 @@ export const SavedCvsDialog: React.FC<SavedCvsDialogProps> = ({ isOpen, onClose,
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const panelClass = isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800';
+  const panelClass = isDarkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-200 text-zinc-800';
 
   const loadList = useCallback(async () => {
     setIsLoading(true);
@@ -88,7 +88,7 @@ export const SavedCvsDialog: React.FC<SavedCvsDialogProps> = ({ isOpen, onClose,
   return (
     <div
       className={`fixed inset-0 z-[60] flex items-center justify-center p-4 backdrop-blur-sm ${
-        isDarkMode ? 'bg-slate-950/80' : 'bg-slate-900/50'
+        isDarkMode ? 'bg-zinc-950/80' : 'bg-zinc-900/50'
       }`}
       role="dialog"
       aria-modal="true"
@@ -100,16 +100,16 @@ export const SavedCvsDialog: React.FC<SavedCvsDialogProps> = ({ isOpen, onClose,
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className={`flex justify-between items-center px-5 py-4 border-b shrink-0 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
+        <div className={`flex justify-between items-center px-5 py-4 border-b shrink-0 ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'}`}>
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-emerald-500/10 text-emerald-500 rounded-xl border border-emerald-500/20">
               <CloudDownload className="w-5 h-5" aria-hidden />
             </div>
             <div>
-              <h2 className={`text-base font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              <h2 className={`text-base font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
                 {isFr ? 'Mes CV sauvegardés' : 'My saved CVs'}
               </h2>
-              <p className={`text-[11px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+              <p className={`text-[11px] ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                 {savedCvs.length} {isFr ? (savedCvs.length > 1 ? 'versions en ligne' : 'version en ligne') : savedCvs.length > 1 ? 'online versions' : 'online version'}
               </p>
             </div>
@@ -119,7 +119,7 @@ export const SavedCvsDialog: React.FC<SavedCvsDialogProps> = ({ isOpen, onClose,
               onClick={loadList}
               disabled={isLoading}
               className={`p-2 rounded-lg transition disabled:opacity-50 ${
-                isDarkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                isDarkMode ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
               }`}
               aria-label={isFr ? 'Rafraîchir' : 'Refresh'}
             >
@@ -128,7 +128,7 @@ export const SavedCvsDialog: React.FC<SavedCvsDialogProps> = ({ isOpen, onClose,
             <button
               onClick={onClose}
               className={`p-2 rounded-lg transition ${
-                isDarkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                isDarkMode ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
               }`}
               aria-label={isFr ? 'Fermer' : 'Close'}
             >
@@ -144,13 +144,13 @@ export const SavedCvsDialog: React.FC<SavedCvsDialogProps> = ({ isOpen, onClose,
           {isLoading && savedCvs.length === 0 && (
             <div className="space-y-2.5">
               {[1, 2, 3].map((i) => (
-                <div key={i} className={`h-16 rounded-xl ai-shimmer ${isDarkMode ? 'bg-slate-800/60' : 'bg-slate-100'}`} />
+                <div key={i} className={`h-16 rounded-xl animate-pulse ${isDarkMode ? 'bg-zinc-800/60' : 'bg-zinc-100'}`} />
               ))}
             </div>
           )}
 
           {!isLoading && savedCvs.length === 0 && !error && (
-            <div className={`text-center py-10 space-y-2 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+            <div className={`text-center py-10 space-y-2 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
               <FileText className="w-10 h-10 mx-auto opacity-50" aria-hidden />
               <p className="text-xs">
                 {isFr
@@ -164,15 +164,15 @@ export const SavedCvsDialog: React.FC<SavedCvsDialogProps> = ({ isOpen, onClose,
             <div
               key={saved.id}
               className={`border rounded-xl p-3.5 flex items-center gap-3 transition ${
-                isDarkMode ? 'bg-slate-800/60 border-slate-700/70 hover:border-slate-500' : 'bg-slate-50 border-slate-200 hover:border-slate-400'
+                isDarkMode ? 'bg-zinc-800/60 border-zinc-700/70 hover:border-zinc-500' : 'bg-zinc-50 border-zinc-200 hover:border-zinc-400'
               }`}
             >
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500/20 to-sky-500/20 border border-emerald-500/30 shrink-0">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-500/20 border border-emerald-500/30 shrink-0">
                 <FileText className="w-4 h-4 text-emerald-500" aria-hidden />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className={`text-sm font-bold truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{saved.name}</h3>
-                <p className={`text-[10px] flex items-center gap-1 mt-0.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                <h3 className={`text-sm font-bold truncate ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{saved.name}</h3>
+                <p className={`text-[10px] flex items-center gap-1 mt-0.5 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                   <Clock className="w-3 h-3" aria-hidden />
                   {formatDate(saved.updatedAt)} • {saved.lang.toUpperCase()}
                 </p>
@@ -181,7 +181,7 @@ export const SavedCvsDialog: React.FC<SavedCvsDialogProps> = ({ isOpen, onClose,
                 <button
                   onClick={() => handleLoad(saved.id)}
                   disabled={isLoading}
-                  className="bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-3.5 py-2 rounded-lg transition flex items-center gap-1.5 disabled:opacity-50"
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3.5 py-2 rounded-lg transition flex items-center gap-1.5 disabled:opacity-50"
                 >
                   {isLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden /> : <CloudDownload className="w-3.5 h-3.5" aria-hidden />}
                   {isFr ? 'Charger' : 'Load'}
@@ -190,7 +190,7 @@ export const SavedCvsDialog: React.FC<SavedCvsDialogProps> = ({ isOpen, onClose,
                   onClick={() => handleDelete(saved.id)}
                   disabled={deletingId === saved.id}
                   className={`p-2 rounded-lg transition disabled:opacity-50 ${
-                    isDarkMode ? 'text-slate-400 hover:text-rose-400 hover:bg-rose-500/10' : 'text-slate-500 hover:text-rose-500 hover:bg-rose-500/10'
+                    isDarkMode ? 'text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10' : 'text-zinc-500 hover:text-rose-500 hover:bg-rose-500/10'
                   }`}
                   aria-label={isFr ? 'Supprimer' : 'Delete'}
                 >

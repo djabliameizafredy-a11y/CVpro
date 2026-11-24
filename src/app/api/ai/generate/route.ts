@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
       thinking: { type: 'disabled' }
     });
 
-    let result: string | string[] = (completion.choices[0]?.message?.content || '').trim();
+    let result: string = (completion.choices[0]?.message?.content || '').trim();
 
     if (!result) {
       return NextResponse.json({ error: 'Empty AI response' }, { status: 502 });

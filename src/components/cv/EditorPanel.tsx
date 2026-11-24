@@ -1,23 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  User,
-  Code,
-  Briefcase,
-  GraduationCap,
-  Globe,
-  Layers,
-  Palette,
-  Upload,
-  Trash2,
-  Plus,
-  PhoneCall,
-  FileText,
-  Image as ImageIcon,
-  Sparkles,
-  Loader2
-} from 'lucide-react';
+import { User, Code, Briefcase, GraduationCap, Globe, Layers, Palette, Upload, Trash2, Plus, PhoneCall, FileText, Image as ImageIcon, Lightbulb, Loader2 } from 'lucide-react';
 import {
   CVData,
   SkillCategory,
@@ -64,7 +48,7 @@ const AiButton: React.FC<AiButtonProps> = ({ target, label, className, isFr, isL
     }
     title={isFr ? 'Générer / améliorer le texte' : 'Generate / improve text'}
   >
-    {isLoading ? <Loader2 className="w-3 h-3 animate-spin" aria-hidden /> : <Sparkles className="w-3 h-3" aria-hidden />}
+    {isLoading ? <Loader2 className="w-3 h-3 animate-spin" aria-hidden /> : <Lightbulb className="w-3 h-3" aria-hidden />}
     <span>{label}</span>
   </button>
 );
@@ -228,19 +212,19 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
   ];
 
   // Dynamic Theme Classes
-  const cardClass = isDarkMode ? 'bg-slate-800/60 border-slate-700/80' : 'bg-white border-slate-200 shadow-2xs';
-  const subCardClass = isDarkMode ? 'bg-slate-800/80 border-slate-700/80' : 'bg-slate-50 border-slate-200/90 shadow-2xs';
+  const cardClass = isDarkMode ? 'bg-zinc-800/60 border-zinc-700/80' : 'bg-white border-zinc-200 shadow-2xs';
+  const subCardClass = isDarkMode ? 'bg-zinc-800/80 border-zinc-700/80' : 'bg-zinc-50 border-zinc-200/90 shadow-2xs';
   const inputClass = isDarkMode
-    ? 'bg-slate-900 border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500'
-    : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-500 shadow-2xs';
-  const labelClass = isDarkMode ? 'text-slate-300' : 'text-slate-700 font-semibold';
-  const subLabelClass = isDarkMode ? 'text-slate-400' : 'text-slate-600 font-medium';
-  const headingClass = isDarkMode ? 'text-sky-400 font-bold' : 'text-sky-600 font-bold';
+    ? 'bg-zinc-900 border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500'
+    : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-emerald-500 shadow-2xs';
+  const labelClass = isDarkMode ? 'text-zinc-300' : 'text-zinc-700 font-semibold';
+  const subLabelClass = isDarkMode ? 'text-zinc-400' : 'text-zinc-600 font-medium';
+  const headingClass = isDarkMode ? 'text-emerald-400 font-bold' : 'text-emerald-600 font-bold';
 
   return (
     <div
       className={`no-print border-r flex flex-col h-full overflow-hidden transition-colors duration-200 ${
-        isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-slate-100 border-slate-200 text-slate-800'
+        isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-200' : 'bg-zinc-100 border-zinc-200 text-zinc-800'
       }`}
       role="complementary"
       aria-label={isFr ? 'Panneau édition' : 'Editor panel'}
@@ -248,7 +232,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
       {/* Navigation Tabs Bar */}
       <div
         className={`flex items-center gap-1 p-2 border-b overflow-x-auto no-scrollbar transition-colors ${
-          isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-200 shadow-2xs'
+          isDarkMode ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200 shadow-2xs'
         }`}
         role="tablist"
       >
@@ -263,10 +247,10 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
               aria-selected={isActive}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
                 isActive
-                  ? 'bg-sky-600 text-white shadow-md'
+                  ? 'bg-emerald-600 text-white shadow-md'
                   : isDarkMode
-                    ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                    ? 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/60'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/60'
               }`}
             >
               <Icon className="w-3.5 h-3.5" aria-hidden />
@@ -376,9 +360,9 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
               </div>
 
               {/* Photo Upload */}
-              <div className={`pt-2 border-t flex items-center gap-4 ${isDarkMode ? 'border-slate-700/60' : 'border-slate-200'}`}>
+              <div className={`pt-2 border-t flex items-center gap-4 ${isDarkMode ? 'border-zinc-700/60' : 'border-zinc-200'}`}>
                 {cv.personal.photoUrl ? (
-                  <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-sky-500 shrink-0">
+                  <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-emerald-500 shrink-0">
                     <img src={cv.personal.photoUrl} alt={isFr ? 'Photo' : 'Photo'} className="w-full h-full object-cover" />
                     <button
                       onClick={() => updatePersonal('photoUrl', '')}
@@ -391,7 +375,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                 ) : (
                   <div
                     className={`w-14 h-14 rounded-full border-2 border-dashed flex items-center justify-center shrink-0 ${
-                      isDarkMode ? 'bg-slate-900 border-slate-700 text-slate-500' : 'bg-slate-100 border-slate-300 text-slate-400'
+                      isDarkMode ? 'bg-zinc-900 border-zinc-700 text-zinc-500' : 'bg-zinc-100 border-zinc-300 text-zinc-400'
                     }`}
                   >
                     <ImageIcon className="w-5 h-5" aria-hidden />
@@ -401,7 +385,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                   <label className={`block text-xs mb-1 ${labelClass}`}>{isFr ? 'Photo de Profil' : 'Profile Photo'}</label>
                   <label
                     className={`cursor-pointer inline-flex items-center gap-2 border px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                      isDarkMode ? 'bg-slate-900 hover:bg-slate-950 text-sky-400 border-slate-700' : 'bg-slate-100 hover:bg-slate-200 text-sky-600 border-slate-300'
+                      isDarkMode ? 'bg-zinc-900 hover:bg-zinc-950 text-emerald-400 border-zinc-700' : 'bg-zinc-100 hover:bg-zinc-200 text-emerald-600 border-zinc-300'
                     }`}
                   >
                     <Upload className="w-3.5 h-3.5" aria-hidden />
@@ -563,7 +547,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                 )}
                 <button
                   onClick={addSkillCategory}
-                  className="bg-sky-600/20 text-sky-500 hover:bg-sky-600/30 px-3 py-1.5 rounded-lg border border-sky-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+                  className="bg-emerald-600/20 text-emerald-500 hover:bg-emerald-600/30 px-3 py-1.5 rounded-lg border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5"
                 >
                   <Plus className="w-3.5 h-3.5" aria-hidden />
                   <span>{isFr ? 'Ajouter' : 'Add'}</span>
@@ -572,7 +556,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
             </div>
 
             {cv.skills.length === 0 ? (
-              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
                 {isFr ? 'Aucune catégorie de compétence. Cliquez sur Ajouter.' : 'No skill categories yet. Click Add.'}
               </p>
             ) : (
@@ -580,7 +564,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                 <div key={item.id} className={`border rounded-xl p-3.5 relative space-y-2 ${subCardClass}`}>
                   <button
                     onClick={() => removeSkill(item.id)}
-                    className="absolute top-3 right-3 text-slate-400 hover:text-rose-500 p-1 transition"
+                    className="absolute top-3 right-3 text-zinc-400 hover:text-rose-500 p-1 transition"
                     aria-label={isFr ? 'Supprimer' : 'Delete'}
                   >
                     <Trash2 className="w-3.5 h-3.5" aria-hidden />
@@ -621,7 +605,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
               </h3>
               <button
                 onClick={addProject}
-                className="bg-sky-600/20 text-sky-500 hover:bg-sky-600/30 px-3 py-1.5 rounded-lg border border-sky-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+                className="bg-emerald-600/20 text-emerald-500 hover:bg-emerald-600/30 px-3 py-1.5 rounded-lg border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5"
               >
                 <Plus className="w-3.5 h-3.5" aria-hidden />
                 <span>{isFr ? 'Ajouter Projet' : 'Add Project'}</span>
@@ -629,7 +613,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
             </div>
 
             {cv.projects.length === 0 ? (
-              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
                 {isFr ? 'Aucune expérience ou projet.' : 'No experience or project items.'}
               </p>
             ) : (
@@ -637,7 +621,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                 <div key={proj.id} className={`border rounded-xl p-4 relative space-y-3 ${subCardClass}`}>
                   <button
                     onClick={() => removeProject(proj.id)}
-                    className="absolute top-3 right-3 text-slate-400 hover:text-rose-500 p-1 transition"
+                    className="absolute top-3 right-3 text-zinc-400 hover:text-rose-500 p-1 transition"
                     aria-label={isFr ? 'Supprimer le projet' : 'Delete project'}
                   >
                     <Trash2 className="w-4 h-4" aria-hidden />
@@ -748,7 +732,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                             const newBullets = (proj.bullets || []).filter((_, i) => i !== bIdx);
                             updateProject(proj.id, 'bullets', newBullets);
                           }}
-                          className="text-slate-400 hover:text-rose-500 p-1 transition shrink-0"
+                          className="text-zinc-400 hover:text-rose-500 p-1 transition shrink-0"
                           aria-label={isFr ? 'Supprimer la puce' : 'Delete bullet'}
                         >
                           <Trash2 className="w-3.5 h-3.5" aria-hidden />
@@ -757,7 +741,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                     ))}
                     <button
                       onClick={() => updateProject(proj.id, 'bullets', [...(proj.bullets || []), ''])}
-                      className="text-[11px] text-sky-500 hover:underline flex items-center gap-1 font-semibold"
+                      className="text-[11px] text-emerald-500 hover:underline flex items-center gap-1 font-semibold"
                     >
                       <Plus className="w-3 h-3" aria-hidden /> {isFr ? 'Ajouter une puce' : 'Add bullet'}
                     </button>
@@ -778,7 +762,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
               </h3>
               <button
                 onClick={addEducation}
-                className="bg-sky-600/20 text-sky-500 hover:bg-sky-600/30 px-3 py-1.5 rounded-lg border border-sky-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+                className="bg-emerald-600/20 text-emerald-500 hover:bg-emerald-600/30 px-3 py-1.5 rounded-lg border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5"
               >
                 <Plus className="w-3.5 h-3.5" aria-hidden />
                 <span>{isFr ? 'Ajouter Formation' : 'Add Education'}</span>
@@ -786,7 +770,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
             </div>
 
             {cv.education.length === 0 ? (
-              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
                 {isFr ? 'Aucune formation.' : 'No education records.'}
               </p>
             ) : (
@@ -794,7 +778,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                 <div key={edu.id} className={`border rounded-xl p-4 relative space-y-3 ${subCardClass}`}>
                   <button
                     onClick={() => removeEducation(edu.id)}
-                    className="absolute top-3 right-3 text-slate-400 hover:text-rose-500 p-1 transition"
+                    className="absolute top-3 right-3 text-zinc-400 hover:text-rose-500 p-1 transition"
                     aria-label={isFr ? 'Supprimer' : 'Delete'}
                   >
                     <Trash2 className="w-4 h-4" aria-hidden />
@@ -860,7 +844,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
               </h3>
               <button
                 onClick={addLanguage}
-                className="bg-sky-600/20 text-sky-500 hover:bg-sky-600/30 px-3 py-1.5 rounded-lg border border-sky-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+                className="bg-emerald-600/20 text-emerald-500 hover:bg-emerald-600/30 px-3 py-1.5 rounded-lg border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5"
               >
                 <Plus className="w-3.5 h-3.5" aria-hidden />
                 <span>{isFr ? 'Ajouter Langue' : 'Add Language'}</span>
@@ -868,7 +852,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
             </div>
 
             {cv.languages.length === 0 ? (
-              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
                 {isFr ? 'Aucune langue ajoutée.' : 'No languages added.'}
               </p>
             ) : (
@@ -890,7 +874,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                   />
                   <button
                     onClick={() => removeLanguage(langItem.id)}
-                    className="text-slate-400 hover:text-rose-500 p-1 transition shrink-0"
+                    className="text-zinc-400 hover:text-rose-500 p-1 transition shrink-0"
                     aria-label={isFr ? 'Supprimer' : 'Delete'}
                   >
                     <Trash2 className="w-4 h-4" aria-hidden />
@@ -911,7 +895,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
               </h3>
               <button
                 onClick={addCustomSection}
-                className="bg-sky-600/20 text-sky-500 hover:bg-sky-600/30 px-3 py-1.5 rounded-lg border border-sky-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+                className="bg-emerald-600/20 text-emerald-500 hover:bg-emerald-600/30 px-3 py-1.5 rounded-lg border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5"
               >
                 <Plus className="w-3.5 h-3.5" aria-hidden />
                 <span>{isFr ? 'Nouvelle Section' : 'New Section'}</span>
@@ -919,7 +903,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
             </div>
 
             {cv.customSections.length === 0 ? (
-              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+              <p className={`text-xs italic text-center py-6 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
                 {isFr ? 'Ajoutez des certifications, projets personnels ou bénévolat.' : 'Add certifications, side projects, or volunteer work.'}
               </p>
             ) : (
@@ -930,7 +914,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                       const updated = cv.customSections.filter((s) => s.id !== sec.id);
                       onChange({ ...cv, customSections: updated });
                     }}
-                    className="absolute top-3 right-3 text-slate-400 hover:text-rose-500 p-1"
+                    className="absolute top-3 right-3 text-zinc-400 hover:text-rose-500 p-1"
                     aria-label={isFr ? 'Supprimer la section' : 'Delete section'}
                   >
                     <Trash2 className="w-4 h-4" aria-hidden />
@@ -954,7 +938,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                     {sec.items.map((item) => (
                       <div
                         key={item.id}
-                        className={`p-2.5 rounded-lg border grid grid-cols-3 gap-2 ${isDarkMode ? 'bg-slate-900 border-slate-700/60' : 'bg-white border-slate-200'}`}
+                        className={`p-2.5 rounded-lg border grid grid-cols-3 gap-2 ${isDarkMode ? 'bg-zinc-900 border-zinc-700/60' : 'bg-white border-zinc-200'}`}
                       >
                         <input
                           type="text"
@@ -996,7 +980,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                               const newSecs = cv.customSections.map((s) => (s.id === sec.id ? { ...s, items: newItems } : s));
                               onChange({ ...cv, customSections: newSecs });
                             }}
-                            className="text-slate-400 hover:text-rose-500 p-1 transition shrink-0"
+                            className="text-zinc-400 hover:text-rose-500 p-1 transition shrink-0"
                             aria-label={isFr ? 'Supprimer' : 'Delete'}
                           >
                             <Trash2 className="w-3.5 h-3.5" aria-hidden />
@@ -1010,7 +994,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                         const newSecs = cv.customSections.map((s) => (s.id === sec.id ? { ...s, items: [...s.items, newItem] } : s));
                         onChange({ ...cv, customSections: newSecs });
                       }}
-                      className="text-[11px] text-sky-500 hover:underline flex items-center gap-1 font-semibold pt-1"
+                      className="text-[11px] text-emerald-500 hover:underline flex items-center gap-1 font-semibold pt-1"
                     >
                       <Plus className="w-3 h-3" aria-hidden /> {isFr ? 'Ajouter une ligne' : 'Add item'}
                     </button>
@@ -1043,14 +1027,14 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                     onClick={() => updateTheme('template', tmpl.id as TemplateStyle)}
                     className={`p-3 rounded-xl border text-xs font-bold transition flex flex-col items-center justify-center gap-0.5 text-center ${
                       cv.theme.template === tmpl.id
-                        ? 'bg-sky-600 border-sky-400 text-white shadow-lg'
+                        ? 'bg-emerald-600 border-emerald-400 text-white shadow-lg'
                         : isDarkMode
-                          ? 'bg-slate-900 border-slate-700 text-slate-300 hover:border-slate-500'
-                          : 'bg-slate-50 border-slate-300 text-slate-700 hover:border-slate-400'
+                          ? 'bg-zinc-900 border-zinc-700 text-zinc-300 hover:border-zinc-500'
+                          : 'bg-zinc-50 border-zinc-300 text-zinc-700 hover:border-zinc-400'
                     }`}
                   >
                     <span>{tmpl.label}</span>
-                    <span className={`text-[9px] font-normal ${cv.theme.template === tmpl.id ? 'text-white/70' : isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                    <span className={`text-[9px] font-normal ${cv.theme.template === tmpl.id ? 'text-white/70' : isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
                       {tmpl.hint}
                     </span>
                   </button>
@@ -1062,7 +1046,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
             <div className={`border rounded-xl p-4 space-y-3 ${cardClass}`}>
               <div>
                 <h3 className={`text-xs uppercase tracking-wider ${headingClass}`}>{isFr ? 'Thème & Couleurs du CV' : 'CV Colors & Theme'}</h3>
-                <p className={`text-[11px] mt-0.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                <p className={`text-[11px] mt-0.5 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                   {isFr
                     ? 'Choisissez une palette prédéfinie ou personnalisez le fond de la sidebar / en-tête et la couleur des icônes/titres.'
                     : 'Select a preset palette or customize background and accent colors.'}
@@ -1071,7 +1055,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
 
               {/* Presets */}
               <div className="space-y-1.5">
-                <span className={`text-[10px] uppercase tracking-wider font-bold block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                <span className={`text-[10px] uppercase tracking-wider font-bold block ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                   {isFr ? 'Palettes Prédéfinies' : 'Preset Palettes'}
                 </span>
                 <div className="flex items-center gap-2.5 flex-wrap">
@@ -1096,7 +1080,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                           updateTheme('accentColor', c.accent);
                         }}
                         className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 relative overflow-hidden ${
-                          isActive ? 'border-white ring-2 ring-sky-400 scale-110 shadow-lg' : 'border-slate-400'
+                          isActive ? 'border-white ring-2 ring-emerald-400 scale-110 shadow-lg' : 'border-zinc-400'
                         }`}
                         style={{ backgroundColor: c.bg }}
                         title={c.name}
@@ -1110,10 +1094,10 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
               </div>
 
               {/* Custom Color Pickers */}
-              <div className={`grid grid-cols-2 gap-2.5 pt-2 border-t ${isDarkMode ? 'border-slate-700/60' : 'border-slate-200'}`}>
+              <div className={`grid grid-cols-2 gap-2.5 pt-2 border-t ${isDarkMode ? 'border-zinc-700/60' : 'border-zinc-200'}`}>
                 <label
                   className={`flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border text-[11px] transition ${
-                    isDarkMode ? 'bg-slate-900 border-slate-700 hover:border-slate-500 text-slate-300' : 'bg-slate-50 border-slate-300 hover:border-slate-400 text-slate-800'
+                    isDarkMode ? 'bg-zinc-900 border-zinc-700 hover:border-zinc-500 text-zinc-300' : 'bg-zinc-50 border-zinc-300 hover:border-zinc-400 text-zinc-800'
                   }`}
                 >
                   <input
@@ -1125,7 +1109,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                   />
                   <div className="truncate">
                     <div className="font-semibold">{isFr ? 'Couleur de fond' : 'Background'}</div>
-                    <div className={`text-[9px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <div className={`text-[9px] ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                       {isFr ? 'Sidebar / En-tête' : 'Sidebar / Header'}
                     </div>
                   </div>
@@ -1133,7 +1117,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
 
                 <label
                   className={`flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border text-[11px] transition ${
-                    isDarkMode ? 'bg-slate-900 border-slate-700 hover:border-slate-500 text-slate-300' : 'bg-slate-50 border-slate-300 hover:border-slate-400 text-slate-800'
+                    isDarkMode ? 'bg-zinc-900 border-zinc-700 hover:border-zinc-500 text-zinc-300' : 'bg-zinc-50 border-zinc-300 hover:border-zinc-400 text-zinc-800'
                   }`}
                 >
                   <input
@@ -1145,7 +1129,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                   />
                   <div className="truncate">
                     <div className="font-semibold">{isFr ? "Couleur d'accent" : 'Accent Color'}</div>
-                    <div className={`text-[9px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <div className={`text-[9px] ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                       {isFr ? 'Icônes & Bordures' : 'Icons & Titles'}
                     </div>
                   </div>
@@ -1198,9 +1182,9 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ cv, onChange, isDarkMo
                   id="toggle-photo"
                   checked={cv.theme.showPhoto}
                   onChange={(e) => updateTheme('showPhoto', e.target.checked)}
-                  className="rounded border-slate-400 text-sky-600 focus:ring-0 cursor-pointer"
+                  className="rounded border-zinc-400 text-emerald-600 focus:ring-0 cursor-pointer"
                 />
-                <label htmlFor="toggle-photo" className={`text-xs font-medium cursor-pointer ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>
+                <label htmlFor="toggle-photo" className={`text-xs font-medium cursor-pointer ${isDarkMode ? 'text-zinc-200' : 'text-zinc-800'}`}>
                   {isFr ? "Afficher l'emplacement photo" : 'Display profile photo'}
                 </label>
               </div>

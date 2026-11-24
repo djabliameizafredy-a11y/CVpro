@@ -13,7 +13,7 @@ export interface AtsCheckResult {
 }
 
 export function evaluateAtsScore(cv: CVData): AtsCheckResult {
-  const checks = [];
+  const checks: AtsCheckResult['checks'] = [];
 
   // 1. Name & Contact Info
   const hasName = Boolean(cv.personal.firstName.trim() && cv.personal.lastName.trim());

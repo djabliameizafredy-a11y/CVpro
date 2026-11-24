@@ -8,6 +8,7 @@ import { evaluateAtsScore } from '@/lib/cv/aiHelpers';
 import { exportToPdf, exportToImage } from '@/lib/cv/exportHelpers';
 import { Header } from '@/components/cv/Header';
 import { EditorPanel, AiTarget } from '@/components/cv/EditorPanel';
+import { GuidedAssistant } from '@/components/cv/GuidedAssistant';
 import { CVPreview } from '@/components/cv/CVPreview';
 import { AtsCheckerModal, AiAtsResult } from '@/components/cv/AtsCheckerModal';
 import { AiAssistantModal } from '@/components/cv/AiAssistantModal';
@@ -43,6 +44,7 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
   const [atsAiResult, setAtsAiResult] = useState<AiAtsResult | null>(null);
 
   // Mobile view switch (editor / preview)
+  const [leftTab, setLeftTab] = useState<'guide' | 'form'>('guide');
   const [mobileView, setMobileView] = useState<'editor' | 'preview'>('editor');
 
   // ─── Hydrate from localStorage on mount (client-only) ───────
@@ -127,7 +129,7 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
     try {
       const fileName = `CV_${cv.personal.firstName || 'Nom'}_${cv.personal.lastName || 'Prenom'}`;
       await exportToPdf('cv-preview-container', fileName);
-      toast({ title: isFr ? 'PDF généré ✓' : 'PDF generated ✓', description: isFr ? 'Téléchargement lancé.' : 'Download started.' });
+      toast({ title: isFr ? 'PDF généré' : 'PDF generated', description: isFr ? 'Téléchargement lancé.' : 'Download started.' });
     } catch {
       toast({
         title: isFr ? 'Erreur PDF' : 'PDF error',
@@ -144,7 +146,7 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
     try {
       const fileName = `CV_${cv.personal.firstName || 'Nom'}_${cv.personal.lastName || 'Prenom'}`;
       await exportToImage('cv-preview-container', fileName, 'png');
-      toast({ title: isFr ? 'Image HD générée ✓' : 'HD image generated ✓', description: isFr ? 'Téléchargement lancé.' : 'Download started.' });
+      toast({ title: isFr ? 'Image HD générée' : 'HD image generated', description: isFr ? 'Téléchargement lancé.' : 'Download started.' });
     } catch {
       toast({
         title: isFr ? 'Erreur Image' : 'Image error',
@@ -177,7 +179,7 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || 'Failed');
       toast({
-        title: isFr ? 'Sauvegardé en ligne ✓' : 'Saved online ✓',
+        title: isFr ? 'Sauvegardé en ligne' : 'Saved online',
         description: isFr ? `"${name}" est disponible dans "Mes CV".` : `"${name}" is now available in "My CVs".`
       });
     } catch {
@@ -238,7 +240,7 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
         }));
       }
 
-      toast({ title: isFr ? 'Contenu généré ✓' : 'Content generated ✓' });
+      toast({ title: isFr ? 'Contenu généré' : 'Content generated' });
     } catch {
       toast({
         title: isFr ? 'Erreur de génération' : 'Generation error',
@@ -266,7 +268,7 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
       setAtsAiResult(data.result as AiAtsResult);
       return data.result as AiAtsResult;
     } catch {
-      const msg = isFr ? "L'analyse IA a échoué. Réessayez." : 'AI analysis failed. Try again.';
+      const msg = isFr ? "L'analyse a échoué. Réessayez." : 'Analysis failed. Try again.';
       setAtsAiError(msg);
       return null;
     } finally {
@@ -278,12 +280,12 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
   const handleLoadSavedCv = (loaded: CVData, name: string) => {
     setCv(loaded);
     toast({
-      title: isFr ? 'CV chargé ✓' : 'CV loaded ✓',
+      title: isFr ? 'CV chargé' : 'CV loaded',
       description: isFr ? `"${name}" a été chargé dans l'éditeur.` : `"${name}" has been loaded into the editor.`
     });
   };
 
-  const appShellBg = isDarkMode ? 'bg-slate-950' : 'bg-slate-100';
+  const appShellBg = isDarkMode ? 'bg-zinc-950' : 'bg-zinc-100';
 
   return (
     <div
@@ -317,7 +319,7 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
       {/* Mobile view switcher */}
       <div
         className={`no-print lg:hidden flex items-center gap-2 p-2 border-b ${
-          isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
+          isDarkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-200'
         }`}
         role="tablist"
         aria-label={isFr ? 'Vue' : 'View'}
@@ -328,10 +330,10 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
           aria-selected={mobileView === 'editor'}
           className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition ${
             mobileView === 'editor'
-              ? 'bg-sky-600 text-white shadow-md'
+              ? 'bg-emerald-600 text-white shadow-md'
               : isDarkMode
-                ? 'text-slate-400 hover:bg-slate-800'
-                : 'text-slate-600 hover:bg-slate-200'
+                ? 'text-zinc-400 hover:bg-zinc-800'
+                : 'text-zinc-600 hover:bg-zinc-200'
           }`}
         >
           <PencilLine className="w-4 h-4" aria-hidden />
@@ -343,10 +345,10 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
           aria-selected={mobileView === 'preview'}
           className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition ${
             mobileView === 'preview'
-              ? 'bg-sky-600 text-white shadow-md'
+              ? 'bg-emerald-600 text-white shadow-md'
               : isDarkMode
-                ? 'text-slate-400 hover:bg-slate-800'
-                : 'text-slate-600 hover:bg-slate-200'
+                ? 'text-zinc-400 hover:bg-zinc-800'
+                : 'text-zinc-600 hover:bg-zinc-200'
           }`}
         >
           <Eye className="w-4 h-4" aria-hidden />
@@ -362,7 +364,14 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
             mobileView === 'editor' ? 'flex' : 'hidden'
           } lg:flex flex-col w-full lg:w-[430px] xl:w-[470px] shrink-0 h-full min-h-0`}
         >
-          <EditorPanel cv={cv} onChange={setCv} isDarkMode={isDarkMode} onAiGenerate={handleAiGenerate} aiLoadingKey={aiLoadingKey} />
+          <div className={`flex shrink-0 border-b ${isDarkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-200'}`}>
+            {([['guide', 'Assistant guidé'], ['form', 'Formulaire']] as const).map(([k, l]) => (
+              <button key={k} onClick={() => setLeftTab(k)} className={`flex-1 py-2.5 text-sm font-medium border-b-2 transition ${leftTab === k ? 'border-emerald-600 text-emerald-500' : `border-transparent ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}`}>{l}</button>
+            ))}
+          </div>
+          {leftTab === 'guide'
+            ? <GuidedAssistant cv={cv} onChange={(u) => setCv(u)} isDarkMode={isDarkMode} onClear={() => { if (confirm('Effacer toutes les données du CV ?')) setCv({ ...emptyCVState, lang: cv.lang }); }} />
+            : <EditorPanel cv={cv} onChange={setCv} isDarkMode={isDarkMode} onAiGenerate={handleAiGenerate} aiLoadingKey={aiLoadingKey} />}
         </div>
 
         {/* CV Preview area */}
@@ -370,7 +379,7 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
           className={`cv-preview-scroll ${
             mobileView === 'preview' ? 'flex' : 'hidden'
           } lg:flex flex-1 justify-center overflow-y-auto custom-scrollbar p-4 md:p-6 lg:p-8 ${
-            isDarkMode ? 'bg-slate-950' : 'bg-slate-200/70'
+            isDarkMode ? 'bg-zinc-950' : 'bg-zinc-200/70'
           }`}
           role="region"
           aria-label={isFr ? 'Aperçu du CV' : 'CV preview'}
@@ -380,7 +389,7 @@ export const CvBuilderApp: React.FC<CvBuilderAppProps> = ({ onBackHome }) => {
             {(isExportingPdf || isExportingImage) && (
               <div
                 className={`no-print mb-4 rounded-xl border px-4 py-3 flex items-center gap-3 text-xs font-semibold ${
-                  isDarkMode ? 'bg-sky-500/10 border-sky-500/30 text-sky-400' : 'bg-sky-50 border-sky-200 text-sky-700'
+                  isDarkMode ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-emerald-50 border-emerald-200 text-emerald-700'
                 }`}
                 role="status"
               >
